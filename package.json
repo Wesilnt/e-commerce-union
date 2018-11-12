@@ -5,12 +5,20 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "eslint-fix": "eslint src/**/**/*.vue --fix",
+    "format-code": "prettier-eslint --write \"src/**/*.js\" \"src/**/*.vue\""
   },
   "dependencies": {
+    "amfe-flexible": "^2.2.1",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "postcss-px-to-viewport": "0.0.3",
+    "prettier-eslint-cli": "^4.7.1",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
@@ -20,18 +28,27 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "lint-staged": "^7.2.2",
+    "postcss-loader": "^3.0.0",
+    "precss": "^3.1.2",
+    "qs": "^6.5.2",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "vue-template-compiler": "^2.5.17"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run precommit-msg && lint-staged"
+    }
+  },
   "lint-staged": {
-    "*.js": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.vue": [
-      "vue-cli-service lint",
+    "**/**.{js,json,pcss,md,vue}": [
+      "prettier --write",
       "git add"
     ]
   }
