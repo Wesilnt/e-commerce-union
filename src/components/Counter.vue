@@ -32,7 +32,7 @@ export default {
     if (this.origin !== this.num) {
       this.smallNum = '.' + `${this.num}`.split('.')[1]
     }
-    this.step = parseFloat((this.num / (60 / 1000) / 3000).toFixed(2))
+    this.step = parseFloat((this.num / (60 / 1000) / 1000).toFixed(2))
     this.$nextTick(() => {
       this.animation = this.handleCounter()
     })

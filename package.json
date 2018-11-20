@@ -16,6 +16,7 @@
     "postcss-px-to-viewport": "0.0.3",
     "prettier-eslint-cli": "^4.7.1",
     "vue": "^2.5.17",
+    "vue-qr": "^1.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "whatwg-fetch": "^3.0.0"
@@ -37,5 +38,5 @@
   "prettier": {
     "singleQuote": true,
     "semi": false
-  },
+  }
 }
