@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div class="toast" :class="{'toast-mask':mask}" v-if="!hidden" @click.self="handleToastHide">
+        <div class="toast" :class="{'toast-mask':mask}" v-if="!hidden" @click.self="handleBgClick">
             <div  class="toast-inner" :class="[hasTypeClassName,positionClassName]" :style="{backgroundColor: bgColor}">
                 <i class="toast-inner-icon"
                    :class="spinningClassName"
@@ -89,18 +89,19 @@ export default {
     },
     handleToastShow() {
       this.hidden = false
-      let duration = 0
-      this.inter = setInterval(() => {
-        if (duration >= this.duration) {
-          return this.handleToastHide()
-        }
-        duration += 1000
-      }, 1000)
+        console.log(this.duration);
+        this.inter = setTimeout(() =>   this.handleToastHide(), this.duration)
     },
     handleToastHide() {
-      this.$toast.clear()
-    }
-  }
+        console.log(this.$toast);
+        this.$toast.clear()
+    },
+      handleBgClick(){
+          if (this.forbidClick) return
+          this.handleToastHide()
+      }
+  },
+
 }
 </script>
 

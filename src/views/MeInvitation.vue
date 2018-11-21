@@ -13,14 +13,17 @@
                     </div>
                 </aside>
             </li>
-
+            <div class="load-more" @click="onLoadMore">
+                <p v-show="loading">加载中</p>
+                <p v-show="!loading">{{finished?'无更多邀请函':'查看更多'}}</p>
+            </div>
         </ul>
     </div>
 </template>
 
 <script>
     import Avatar from '@/components/Avatar.vue'
-
+    import {mapState, mapActions} from 'vuex'
     export default {
         name: "MeInvitation",
         data() {
@@ -37,7 +40,11 @@
             }
         },
         components: {Avatar},
+        computed:{
+            ...mapState(['loading','finished'])
+        },
         created(){
+            this.getMeInvitationList(true)
             setTimeout(()=>{
                 this.invitationList = [
                     {id: 1,avatar: '',name:'Anson',max:100,value:50},
@@ -49,6 +56,12 @@
                     {id: 7,avatar: '',name:'Anson',max:100,value:50},
                 ]
             },600)
+        },
+        methods:{
+            ...mapActions(['getMeInvitationList']),
+            onLoadMore(){
+
+            },
         }
     }
 </script>
@@ -57,6 +70,7 @@
     .me-invitation {
         height: 100vh;
         background-color: #ffffff;
+        text-align: center;
     }
 
     li + li {
@@ -74,6 +88,7 @@
         &-aside {
             flex: 1;
             h3 {
+                text-align: left;
                 font-size: 32px;
                 color: #333333;
                 line-height: 32px;

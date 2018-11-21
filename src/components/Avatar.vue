@@ -19,7 +19,9 @@ export default {
       const length = (this.width / winWidth) * 100 + 'vw'
       return {
         width: length,
-        height: length
+        height: length,
+        backgroundColor: '#fda0a0',
+        background: `url(${this.src}) center/100% no-repeat`
       }
     }
   }

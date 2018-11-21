@@ -8,111 +8,13 @@ export const json2formData = json => {
   if (Object.prototype.toString.call(json) !== '[object Object]') {
     return json
   }
-
   const formData = new FormData()
   for (const [key, value] of Object.entries(json)) {
     formData.append(key, value)
   }
   return formData
 }
-export const formatDuring = mss => {
-  if (isNaN(mss)) return '00:00'
-  mss = Math.round(mss)
-  var days = parseInt(mss / (60 * 60 * 24))
-  var hours = parseInt((mss % (60 * 60 * 24)) / (60 * 60))
-  var minutes = parseInt((mss % (60 * 60)) / 60)
-  var seconds = mss % 60
-  hours = hours < 10 ? '0' + hours : hours
-  minutes = minutes < 10 ? '0' + minutes : minutes
-  seconds = seconds < 10 ? '0' + seconds : seconds
-  return minutes + ':' + seconds
-}
-export function getDateDiff(dateStr) {
-  var publishTime = dateStr / 1000,
-    d_seconds,
-    d_minutes,
-    d_hours,
-    d_days,
-    timeNow = parseInt(new Date().getTime() / 1000),
-    d,
-    date = new Date(publishTime * 1000),
-    Y = date.getFullYear(),
-    M = date.getMonth() + 1,
-    D = date.getDate(),
-    H = date.getHours(),
-    m = date.getMinutes(),
-    s = date.getSeconds();
-  //小于10的在前面补0
-  if (M < 10) {
-    M = '0' + M;
-  }
-  if (D < 10) {
-    D = '0' + D;
-  }
-  if (H < 10) {
-    H = '0' + H;
-  }
-  if (m < 10) {
-    m = '0' + m;
-  }
-  if (s < 10) {
-    s = '0' + s;
-  }
 
-  d = timeNow - publishTime;
-  d_days = parseInt(d / 86400);
-  d_hours = parseInt(d / 3600);
-  d_minutes = parseInt(d / 60);
-  d_seconds = parseInt(d);
-
-  if (d_days > 0 && d_days < 3) {
-    return d_days + '天前';
-  } else if (d_days <= 0 && d_hours > 0) {
-    return d_hours + '小时前';
-  } else if (d_hours <= 0 && d_minutes > 0) {
-    return d_minutes + '分钟前';
-  } else if (d_seconds < 60) {
-    if (d_seconds <= 0) {
-      return '刚刚';
-    } else {
-      return d_seconds + '秒前';
-    }
-  } else if (d_days >= 3 && d_days < 30) {
-    return M + '月' + D + '日' + H + ':' + m;
-  } else if (d_days >= 30) {
-    return Y + '月' + M + '日' + D + ' ' + H + ':' + m;
-  }
-}
-
-//学习进度百分比格式化
-export const learntimeFormat = (learntime, totaltime, id) => {
-  let progressCache = localStorage.getItem(id) 
-  let curTime = learntime 
-  if (progressCache) {
-    let learnJson = JSON.parse(progressCache)
-    curTime = learnJson.currentTime || learnJson.historyPlayPosition
-  }
-  if (!curTime || curTime <= 1) return '未收听'
-  let percent = parseInt((curTime * 100) / totaltime)
-  return '已收听' + (percent < 1 ? 1 : percent) + '%'
-}
-
-//倒计时函数
-export const startCountDown = (duration, callback) => {
-  return setInterval(() => {
-    var hours = parseInt(duration / (60 * 60))
-    var minutes = parseInt((duration % (60 * 60)) / 60)
-    var seconds = duration % 60
-    hours = parseInt(hours)
-    minutes = parseInt(minutes)
-    seconds = parseInt(seconds)
-    hours = hours < 10 ? '0' + hours : hours
-    minutes = minutes < 10 ? '0' + minutes : minutes
-    seconds = seconds < 10 ? '0' + seconds : seconds
-    callback([hours, minutes, seconds])
-    duration--
-  }, 1000)
-}
 
 export function debounce(func, wait, immediate) {
   // immediate默认为false
@@ -189,50 +91,5 @@ export function throttle(func, wait, options) {
       timeout = setTimeout(later, remaining)
     }
     return result
-  }
-}
-/**
- * 手机号码校验
- */
-export function isPhoneNumber( value) {
-  if (value && (!(/^[1][34578]\d{9}$/).test(value) || !(/^[1-9]\d*$/).test(value) || value.length !== 11)) {
-    return false
-  } else {
-    return true
-  }
-}
-
-const gradeMap = [
-  { key: -1, value: '未上学' },
-  { key: 0, value: '幼儿园' },
-  { key: 1, value: '一年级' },
-  { key: 2, value: '二年级' },
-  { key: 3, value: '三年级' },
-  { key: 4, value: '四年级' },
-  { key: 5, value: '五年级' },
-  { key: 6, value: '六年级' },
-  { key: 7, value: '初一' },
-  { key: 8, value: '初二' },
-  { key: 9, value: '初三' },
-  { key: 10, value: '初三以上' }
-]
-// 根据key 转化成 年级
-export function getGradeStr(num) {
-  for (let i = 0; i < gradeMap.length; i++) {
-    let key = gradeMap[i].key
-    let value = gradeMap[i].value
-    if (num === key) {
-      return value
-    }
-  }
-}
-// 根据 年级转化成 key
-export function getGradeNum(str) {
-  for (let i = 0; i < gradeMap.length; i++) {
-    let key = gradeMap[i].key
-    let value = gradeMap[i].value
-    if (value === str) {
-      return key
-    }
   }
 }

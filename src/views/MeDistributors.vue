@@ -47,9 +47,13 @@
             }
         },
         components: {Avatar},
+        created(){
+            this.getMeDistributors(true)
+        },
         methods: {
+            ...mapActions([]),
             onLoadMore() {
-                //TODO 分页
+                this.getMeDistributors(false)
             }
         }
     }
@@ -90,9 +94,6 @@
     }
     .item-text span{
         color: #ffa32f;
-    }
-    .load-more{
-        padding: 40px;
     }
 
 </style>

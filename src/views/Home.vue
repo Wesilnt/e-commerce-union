@@ -13,9 +13,9 @@
             <li class="flex-item" @click="toMeInvitation">我的邀请（0）</li>
             <li class="flex-item" @click="toInvitationLetter">分销员邀请函</li>
         </ul>
-        <div class="big-border" @click="toProfitDetail">
+        <div class="big-border">
             <div class="body-nav">我的资产</div>
-            <div class="body-screen">
+            <div class="body-screen" @click="toProfitDetail(0)">
                 <p>当前累计收益</p>
                 <p class="screen-giant"><strong>
                     <Counter :num="9360.08"/>
@@ -23,11 +23,11 @@
                 <p>每月10日结算<span class="help">?</span></p>
             </div>
             <div class="ea-flex center-vertline body-foot">
-                <div class="flex-item">已结算（
+                <div class="flex-item" @click="toProfitDetail(1)">已结算（
                     <Counter :num="60.08"/>
                     ）
                 </div>
-                <div class="flex-item">待结算（
+                <div class="flex-item" @click="toProfitDetail(2)">待结算（
                     <Counter :num="162.88"/>
                     ）
                 </div>
@@ -38,11 +38,11 @@
                 <p class="txt-giant"><strong>5</strong></p>
                 <p>我的分销员</p>
             </div>
-            <div class="flex-item" @click="toProfitDetail">
+            <div class="flex-item" @click="toProfitDetail(0)">
                 <p class="txt-giant"><strong>3</strong></p>
                 <p>推广订单</p>
             </div>
-            <div class="flex-item">
+            <div class="flex-item" @click="toTransferRecord">
                 <p class="txt-giant"><strong>5</strong></p>
                 <p>打款记录</p>
             </div>
@@ -55,21 +55,19 @@
 </template>
 
 <script>
-    import {  mapState, mapActions } from 'vuex'
+    import {mapState, mapActions} from 'vuex'
     // @ is an alias to /src
     import Avatar from '@/components/Avatar.vue'
     import Counter from '@/components/Counter.vue'
 
     export default {
         name: 'Home',
-        components: {
-            Avatar,
-            Counter
-        },
-        mounted() {
-            // this.makeAToast()
+        components: { Avatar,Counter},
+        created() {
+            this.getPresidentDetail()
         },
         methods: {
+            ...mapActions(['getPresidentDetail']),
             makeAToast() {
                 this.$router.push({name: 'problem'})
                 // this.$toast.loading({
@@ -93,15 +91,15 @@
             toInvitationLetter() {
                 this.$router.push({name: 'invitationLetter'})
             },
-            toProfitDetail() {
-                this.$router.push({name: 'invitationOrderDetail'})
+            toProfitDetail(index) {
+                this.$router.push({name: 'invitationOrderDetail', query: {index}})
             },
             toMeDistributors() {
                 this.$router.push({name: 'meDistributors'})
             },
-            // toIntroduce() {
-            //     this.$router.push({name: 'DistributionIntroduce'})
-            // }
+            toTransferRecord() {
+                this.$router.push({name: 'transferRecord'})
+            }
         }
     }
 </script>

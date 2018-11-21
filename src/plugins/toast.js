@@ -45,7 +45,6 @@ export default {
       toastPromise[item] = params => toastPromise(params, item)
     })
     toastPromise.clear = function() {
-      if (toast.forbidClick) return
       clearInterval(toast.inter)
       toast.hidden = true
       toast.$el.parentNode.removeChild(toast.$el)
