@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     async show(params) {
-      console.log(params)
       clearInterval(this.inter)
       const { type, message } = params
       if (type) {
@@ -89,11 +88,10 @@ export default {
     },
     handleToastShow() {
       this.hidden = false
-        console.log(this.duration);
+        if(this.duration===-1)return
         this.inter = setTimeout(() =>   this.handleToastHide(), this.duration)
     },
     handleToastHide() {
-        console.log(this.$toast);
         this.$toast.clear()
     },
       handleBgClick(){

@@ -8,7 +8,7 @@
                     <div class="me-invitation-item-bottom">
                         <label>推广进度</label>
                         <span>0</span>
-                        <progress :max="item.max" :value="item.value"></progress>
+                        <Progress :max="item.max" :value="item.value"></Progress>
                         <span>{{item.max}}</span>
                     </div>
                 </aside>
@@ -23,6 +23,7 @@
 
 <script>
     import Avatar from '@/components/Avatar.vue'
+    import Progress from '@/components/Progress.vue'
     import {mapState, mapActions} from 'vuex'
     export default {
         name: "MeInvitation",
@@ -39,7 +40,7 @@
                 ]
             }
         },
-        components: {Avatar},
+        components: {Avatar,Progress},
         computed:{
             ...mapState(['loading','finished'])
         },
@@ -60,7 +61,8 @@
         methods:{
             ...mapActions(['getMeInvitationList']),
             onLoadMore(){
-
+                if(this.loading || this.finished) return
+                this.getMeInvitationList(false)
             },
         }
     }
@@ -102,20 +104,5 @@
         &-bottom label {
             margin-right: 30px;
         }
-        &-bottom progress {
-            background-color: #eee;
-            flex: 1;
-            height: 8px;
-            margin: 0 16px;
-            transition: value 2.5s ease 0.4s;
-        }
-    }
-
-    progress::-webkit-progress-bar {
-        background-color: #ededed;
-    }
-
-    progress::-webkit-progress-value {
-        background-color: #ffa32f;
     }
 </style>

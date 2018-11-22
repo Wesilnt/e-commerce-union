@@ -2,15 +2,15 @@
     <div>
         <div class="index-header">
             <div class="user-wrapper">
-                <Avatar width="96"/>
-                <p class="text-center user-name"><strong>柳岩</strong></p>
+                <Avatar :src="presidentInfo.avatarUrl" width="96"/>
+                <p class="text-center user-name"><strong>{{presidentInfo.contanctName}}</strong></p>
             </div>
             <div class="index-header_footer">
-                提成比例: 6%
+                提成比例: {{presidentInfo&&presidentInfo.incomePropors}}%
             </div>
         </div>
         <ul class="ea-flex big-border index-invite center-vertline">
-            <li class="flex-item" @click="toMeInvitation">我的邀请（0）</li>
+            <li class="flex-item" @click="toMeInvitation">我的邀请（{{presidentInfo.applyCount}}）</li>
             <li class="flex-item" @click="toInvitationLetter">分销员邀请函</li>
         </ul>
         <div class="big-border">
@@ -18,32 +18,32 @@
             <div class="body-screen" @click="toProfitDetail(0)">
                 <p>当前累计收益</p>
                 <p class="screen-giant"><strong>
-                    <Counter :num="9360.08"/>
+                    <Counter :num="presidentInfo&&presidentInfo.totalIncome"/>
                 </strong><i class="arrow-right"></i></p>
                 <p>每月10日结算<span class="help">?</span></p>
             </div>
             <div class="ea-flex center-vertline body-foot">
                 <div class="flex-item" @click="toProfitDetail(1)">已结算（
-                    <Counter :num="60.08"/>
+                    <Counter :num="presidentInfo&&presidentInfo.settled"/>
                     ）
                 </div>
                 <div class="flex-item" @click="toProfitDetail(2)">待结算（
-                    <Counter :num="162.88"/>
+                    <Counter :num="presidentInfo&&presidentInfo.noSettlement"/>
                     ）
                 </div>
             </div>
         </div>
         <div class="ea-flex big-border body-foot">
             <div class="flex-item" @click="toMeDistributors">
-                <p class="txt-giant"><strong>5</strong></p>
+                <p class="txt-giant"><strong>{{presidentInfo&&presidentInfo.disCount}}</strong></p>
                 <p>我的分销员</p>
             </div>
             <div class="flex-item" @click="toProfitDetail(0)">
-                <p class="txt-giant"><strong>3</strong></p>
+                <p class="txt-giant"><strong>{{presidentInfo&&presidentInfo.orderCount}}</strong></p>
                 <p>推广订单</p>
             </div>
             <div class="flex-item" @click="toTransferRecord">
-                <p class="txt-giant"><strong>5</strong></p>
+                <p class="txt-giant"><strong>{{presidentInfo&&presidentInfo.transRecordCount}}</strong></p>
                 <p>打款记录</p>
             </div>
         </div>
@@ -56,13 +56,15 @@
 
 <script>
     import {mapState, mapActions} from 'vuex'
+    import {encode} from '../utils/util'
     // @ is an alias to /src
     import Avatar from '@/components/Avatar.vue'
     import Counter from '@/components/Counter.vue'
 
     export default {
         name: 'Home',
-        components: { Avatar,Counter},
+        components: {Avatar, Counter},
+        computed: {...mapState(['presidentInfo'])},
         created() {
             this.getPresidentDetail()
         },
@@ -89,7 +91,13 @@
                 this.$router.push({name: 'meInvitation'})
             },
             toInvitationLetter() {
-                this.$router.push({name: 'invitationLetter'})
+                let info = {
+                    id: this.presidentInfo.id,
+                    avatarUrl: this.presidentInfo.avatarUrl,
+                    contactName: this.presidentInfo.contanctName,
+                }
+                const presidentInfo = encodeURIComponent(encode(JSON.stringify(info)))
+                this.$router.push({name: 'invitationLetter', query: {presidentInfo}})
             },
             toProfitDetail(index) {
                 this.$router.push({name: 'invitationOrderDetail', query: {index}})
@@ -104,6 +112,9 @@
     }
 </script>
 <style lang="less">
+    body{
+        background-color: #F7F7F7;
+    }
     .index-header {
         background-color: #323241;
     }

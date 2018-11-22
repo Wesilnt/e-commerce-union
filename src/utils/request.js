@@ -3,11 +3,13 @@ import  Toast  from '../plugins/toast'
 import { isUrl, json2formData } from './util'
 import { getAccessToken, getCookie } from './userAuth'
 import store from '../store'
+import routerRedux from '../router'
 import { IS_ONLINE, TEST_TOKEN, api, originUrl } from './config'
 
 const ErrorHandler = response => {
   console.error(response)
   const errorText = response.message || response.error || response.code
+    routerRedux.push("/login")
   return Toast(errorText)
     // errorText === '系统异常'
     // ? Dialog.alert({
@@ -58,6 +60,7 @@ const checkResponseCode = (url, response) => {
     if (parseInt(response.data) === 0) {
       return response.data
     }
+    if(false === response.data) return false
     return response.data || response
   }
   ErrorHandler(response)
@@ -107,17 +110,17 @@ function request(url, options) {
       const status = e.name
       if (status === 403) {
         Toast.fail('网络异常')
-        // dispatch(routerRedux.push("/exception/403"));
+        routerRedux.push("/login")
         return
       }
       if (status <= 504 && status >= 500) {
         Toast.fail('网络异常')
-        // dispatch(routerRedux.push('/exception/500'));
+        routerRedux.push('/login')
         return
       }
       if (status >= 404 && status < 422) {
         Toast.fail('网络异常')
-        // dispatch(routerRedux.push("/exception/404"));
+        routerRedux.push("/login")
       }
     })
 }

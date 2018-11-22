@@ -2,7 +2,9 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {
     getToken,
+    isDistributor,
     getUserByToken,
+    applyDistributor,
     sendMobileCode,
     validateMobileCode,
     getPresidentDetail,
@@ -19,6 +21,7 @@ export default new Vuex.Store({
         getCodeTip: '获取验证码',                  //
         remainTime: '发送短信',                    //
         clickAble: true,                          //
+        extendAmount:0,                            //分销员佣金
         presidentInfo: {},                         //分会长信息
         invitationList: [],                        //分会长邀请列表
         incomeOrderList: [],                       //分会长收入订单列表
@@ -28,10 +31,17 @@ export default new Vuex.Store({
         currentPage: 1,                            //分页page
         loading: false,                           //列表加载中
         finished: false,                          //列表加载结束
+        isDistributor: null,                      //是不是分销员
     },
     mutations: {
         saveUserInfo(state,data){
           Object.assign(state,data)
+        },
+        save(state, payload) {
+            Object.assign(state, payload)
+        },
+        bindDistributorInfo(state, data) {
+            Object.assign(state, data)
         },
         startSendCode(state) {
             state.sending = true;
@@ -79,12 +89,30 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async getAccessToken() {
+            await getToken()
+        },
         async getUserInfo({state, commit}, forceUpdate = false) {
             const {userInfo} = state
             if (userInfo && !forceUpdate) return userInfo
             const res = await getUserByToken()
-            console.log("getUserInfo", res)
             commit('saveUserInfo', {userInfo: res})
+            return res
+        },
+        /**是否是分销员*/
+        async checkDistributor({state, commit ,dispatch}, useCache = false) {
+            if(undefined != state.isDistributor && useCache) return state.isDistributor
+            const response = await isDistributor()
+            console.log("res",response)
+            await commit('save', {isDistributor: response})
+            return response
+        },
+        /**申请成为分销员*/
+        async applyDistributor({ state, commit, dispatch },params) {
+            const res = await applyDistributor(params)
+            if (!res) return
+            await commit('bindDistributorInfo',{extendAmount:res.extendAmount})
+            await dispatch('checkDistributor', {useCache: false})
             return res
         },
         async sendMobileCode({ commit }, params) {
@@ -117,8 +145,8 @@ export default new Vuex.Store({
             const currentPage =  refresh ? 1: state.currentPage+1
             const params = { currentPage,  pageSize:state.pageSize }
             const res = await getMeInvitationList(params)
-            let data = refresh? res.result:state.invitationList.concat(res.result)
             console.log("getMeInvitationList", res)
+            let data = refresh? res.result:state.invitationList.concat(res.result)
             const  finished = data.length >= res.totalCount
             commit('toggleLoading', false)
             commit('setInvitationList', {invitationList: data,currentPage,finished})
@@ -134,10 +162,10 @@ export default new Vuex.Store({
             commit('toggleLoading', false)
             commit('setMeDistributors', {distributors: data,currentPage,finished})
         },
-        async getIncomeOrders({state,commit}, refresh) {
+        async getIncomeOrders({state,commit}, {refresh,status=1}) {
             commit('toggleLoading', true)
             const currentPage =  refresh ? 1: state.currentPage+1
-            const params = { currentPage,  pageSize:state.pageSize }
+            const params = {status, currentPage,  pageSize:state.pageSize }
             const res = await getIncomeOrders(params)
             let data = refresh? res.result:state.incomeOrderList.concat(res.result)
             console.log("getMeDistributors", res)

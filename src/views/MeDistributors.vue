@@ -16,7 +16,7 @@
             </li>
             <div class="load-more" @click="onLoadMore">
                 <p v-show="isLoading">加载中</p>
-                <p v-show="!isLoading">{{finished?'无更多收益明细':'查看更多'}}</p>
+                <p v-show="!isLoading">{{finished?'无更多分销员':'查看更多'}}</p>
             </div>
         </ul>
     </div>
@@ -51,8 +51,9 @@
             this.getMeDistributors(true)
         },
         methods: {
-            ...mapActions([]),
+            ...mapActions(['getMeDistributors']),
             onLoadMore() {
+                if(this.loading || this.finished) return
                 this.getMeDistributors(false)
             }
         }

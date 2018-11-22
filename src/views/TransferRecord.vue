@@ -21,8 +21,8 @@
 
         <!--底部描述-->
         <footer class="transfer-detail-footer" @click="onLoadMore">
-            <p v-show="isLoading">加载中</p>
-            <p v-show="!isLoading">{{finished?'无更多转账明细':'查看更多'}}</p>
+            <p v-show="loading">加载中</p>
+            <p v-show="!loading">{{finished?'无更多转账明细':'查看更多'}}</p>
         </footer>
 
     </div>
@@ -54,7 +54,6 @@
             }
         },
         beforeDestroy() {
-            this.onDestroy()
         }
     }
 </script>

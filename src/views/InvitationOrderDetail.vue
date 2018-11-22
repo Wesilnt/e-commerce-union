@@ -45,13 +45,17 @@
         components: {ScrollNavBar},
         computed:{ ...mapState(['loading','finished'])},
         created(){
-
+            this.getIncomeOrders({refresh:true,status:this.tabIndex})
         },
         methods: {
-            ...mapActions([]),
+            ...mapActions(['getIncomeOrders']),
             tabClick(index) {
+                this.tabIndex = index
+                this.getIncomeOrders({refresh:true,status:this.tabIndex})
             },
             onLoadMore(){
+                if(this.loading || this.finished) return
+                this.getIncomeOrders({refresh:false,status:this.tabIndex})
             }
         }
     }
