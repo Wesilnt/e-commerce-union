@@ -88,18 +88,17 @@ export default {
     },
     handleToastShow() {
       this.hidden = false
-        if(this.duration===-1)return
-        this.inter = setTimeout(() =>   this.handleToastHide(), this.duration)
+      if (this.duration === -1) return
+      this.inter = setTimeout(() => this.handleToastHide(), this.duration)
     },
     handleToastHide() {
-        this.$toast.clear()
+      this.$toast.clear()
     },
-      handleBgClick(){
-          if (this.forbidClick) return
-          this.handleToastHide()
-      }
-  },
-
+    handleBgClick() {
+      if (this.forbidClick) return
+      this.handleToastHide()
+    }
+  }
 }
 </script>
 

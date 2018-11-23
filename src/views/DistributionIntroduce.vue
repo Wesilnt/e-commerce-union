@@ -3,11 +3,10 @@
 </template>
 
 <script>
-    export default {
-        name: "DistributionIntroduce"
-    }
+export default {
+  name: 'DistributionIntroduce'
+}
 </script>
 
 <style scoped>
-
 </style>

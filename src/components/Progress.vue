@@ -5,31 +5,30 @@
 </template>
 
 <script>
-    export default {
-        name: "Progress",
-        props: {
-            max: {
-                default: 100
-            },
-            value: {
-                default: 0
-            },
-        },
+export default {
+  name: 'Progress',
+  props: {
+    max: {
+      default: 100
+    },
+    value: {
+      default: 0
     }
+  }
+}
 </script>
 
 <style scoped>
-
-    .progress-bg{
-        background-color: #eee;
-        min-width: 100px;
-        flex: 1;
-        height: 8px;
-        margin: 0 16px;
-    }
-    .progress-value{
-        height: inherit;
-        background-color: #ffa32f;
-        transition: width 0.3s ease 0s;
-    }
+.progress-bg {
+  background-color: #eee;
+  min-width: 100px;
+  flex: 1;
+  height: 8px;
+  margin: 0 16px;
+}
+.progress-value {
+  height: inherit;
+  background-color: #ffa32f;
+  transition: width 0.3s ease 0s;
+}
 </style>

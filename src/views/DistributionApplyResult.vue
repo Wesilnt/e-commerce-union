@@ -20,67 +20,67 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex';
+import { mapState, mapActions } from 'vuex'
 
-    export default {
-        data() {
-            return {
-                successIcon: require('../assets/distributor_success.png'),
-                failureIcon: require('../assets/distributor_failure.png'),
-            };
-        },
-        computed: {...mapState(['extendAmount', 'isDistributor'])},
-        created() {
-
-        },
-        methods: {
-            ...mapActions(['checkDistributor']),
-            nextOperate() {
-                //分销员跳转查看详情， 非分销员跳转首页去分享
-                window.location.href = `http://t.shbaoyuantech.com/#/${this.isDistributor ? 'my/my-distributionCenter' : ''}`
-            }
-        }
-    };
+export default {
+  data() {
+    return {
+      successIcon: require('../assets/distributor_success.png'),
+      failureIcon: require('../assets/distributor_failure.png')
+    }
+  },
+  computed: { ...mapState(['extendAmount', 'isDistributor']) },
+  created() {},
+  methods: {
+    ...mapActions(['checkDistributor']),
+    nextOperate() {
+      //分销员跳转查看详情， 非分销员跳转首页去分享
+      window.location.href = `http://t.shbaoyuantech.com/#/${
+        this.isDistributor ? 'my/my-distributionCenter' : ''
+      }`
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
-    .apply-success {
-        font-size: 28px;
-        color: #333333;
-        text-align: center;
-        em {
-            font-style: normal;
-            color: #ffa32f;
-        }
-        /*icon*/
-        &-header {
-            width: 120px;
-            height: 120px;
-            margin: 80px auto 0;
-            background-repeat: no-repeat;
-            background-size: 100%;
-        }
-        /*描述*/
-        &-introduce {
-            padding: 40px 80px;
-        }
-        /*底部按钮*/
-        &-footer {
-            width: auto;
-            height: 96px;
-            border: 1px solid #ffa32f; /*no*/
-            color: #ffa32f;
-            border-radius: 48px;
-            display: inline-flex;
-            padding: 0 60px;
-            p {
-                line-height: 28px;
-                margin: auto;
-            }
-        }
-        &-footer:active {
-            margin-top: 10px;
-            opacity: 0.6;
-        }
+.apply-success {
+  font-size: 28px;
+  color: #333333;
+  text-align: center;
+  em {
+    font-style: normal;
+    color: #ffa32f;
+  }
+  /*icon*/
+  &-header {
+    width: 120px;
+    height: 120px;
+    margin: 80px auto 0;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+  /*描述*/
+  &-introduce {
+    padding: 40px 80px;
+  }
+  /*底部按钮*/
+  &-footer {
+    width: auto;
+    height: 96px;
+    border: 1px solid #ffa32f; /*no*/
+    color: #ffa32f;
+    border-radius: 48px;
+    display: inline-flex;
+    padding: 0 60px;
+    p {
+      line-height: 28px;
+      margin: auto;
     }
+  }
+  &-footer:active {
+    margin-top: 10px;
+    opacity: 0.6;
+  }
+}
 </style>

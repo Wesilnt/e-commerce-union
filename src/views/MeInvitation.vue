@@ -22,87 +22,87 @@
 </template>
 
 <script>
-    import Avatar from '@/components/Avatar.vue'
-    import Progress from '@/components/Progress.vue'
-    import {mapState, mapActions} from 'vuex'
-    export default {
-        name: "MeInvitation",
-        data() {
-            return {
-                invitationList: [
-                    {id: 1,avatar: '',name:'Anson',max:100,value:0},
-                    {id: 2,avatar: '',name:'Anson',max:100,value:0},
-                    {id: 3,avatar: '',name:'Anson',max:100,value:0},
-                    {id: 4,avatar: '',name:'Anson',max:100,value:0},
-                    {id: 5,avatar: '',name:'Anson',max:100,value:0},
-                    {id: 6,avatar: '',name:'Anson',max:100,value:0},
-                    {id: 7,avatar: '',name:'Anson',max:100,value:0},
-                ]
-            }
-        },
-        components: {Avatar,Progress},
-        computed:{
-            ...mapState(['loading','finished'])
-        },
-        created(){
-            this.getMeInvitationList(true)
-            setTimeout(()=>{
-                this.invitationList = [
-                    {id: 1,avatar: '',name:'Anson',max:100,value:50},
-                    {id: 2,avatar: '',name:'Anson',max:100,value:50},
-                    {id: 3,avatar: '',name:'Anson',max:100,value:50},
-                    {id: 4,avatar: '',name:'Anson',max:100,value:50},
-                    {id: 5,avatar: '',name:'Anson',max:100,value:50},
-                    {id: 6,avatar: '',name:'Anson',max:100,value:50},
-                    {id: 7,avatar: '',name:'Anson',max:100,value:50},
-                ]
-            },600)
-        },
-        methods:{
-            ...mapActions(['getMeInvitationList']),
-            onLoadMore(){
-                if(this.loading || this.finished) return
-                this.getMeInvitationList(false)
-            },
-        }
+import Avatar from '@/components/Avatar.vue'
+import Progress from '@/components/Progress.vue'
+import { mapState, mapActions } from 'vuex'
+export default {
+  name: 'MeInvitation',
+  data() {
+    return {
+      invitationList: [
+        { id: 1, avatar: '', name: 'Anson', max: 100, value: 0 },
+        { id: 2, avatar: '', name: 'Anson', max: 100, value: 0 },
+        { id: 3, avatar: '', name: 'Anson', max: 100, value: 0 },
+        { id: 4, avatar: '', name: 'Anson', max: 100, value: 0 },
+        { id: 5, avatar: '', name: 'Anson', max: 100, value: 0 },
+        { id: 6, avatar: '', name: 'Anson', max: 100, value: 0 },
+        { id: 7, avatar: '', name: 'Anson', max: 100, value: 0 }
+      ]
     }
+  },
+  components: { Avatar, Progress },
+  computed: {
+    ...mapState(['loading', 'finished'])
+  },
+  created() {
+    this.getMeInvitationList(true)
+    setTimeout(() => {
+      this.invitationList = [
+        { id: 1, avatar: '', name: 'Anson', max: 100, value: 50 },
+        { id: 2, avatar: '', name: 'Anson', max: 100, value: 50 },
+        { id: 3, avatar: '', name: 'Anson', max: 100, value: 50 },
+        { id: 4, avatar: '', name: 'Anson', max: 100, value: 50 },
+        { id: 5, avatar: '', name: 'Anson', max: 100, value: 50 },
+        { id: 6, avatar: '', name: 'Anson', max: 100, value: 50 },
+        { id: 7, avatar: '', name: 'Anson', max: 100, value: 50 }
+      ]
+    }, 600)
+  },
+  methods: {
+    ...mapActions(['getMeInvitationList']),
+    onLoadMore() {
+      if (this.loading || this.finished) return
+      this.getMeInvitationList(false)
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
-    .me-invitation {
-        height: 100vh;
-        background-color: #ffffff;
-        text-align: center;
-    }
+.me-invitation {
+  height: 100vh;
+  background-color: #ffffff;
+  text-align: center;
+}
 
-    li + li {
-        border-top: 1px solid #ededed;
-    }
+li + li {
+  border-top: 1px solid #ededed;
+}
 
-    .me-invitation-item {
-        margin: 0 30px;
-        font-size: 24px;
-        color: #333333;
-        padding: 30px 0 28px;
-        &-head {
-            margin-right: 16px;
-        }
-        &-aside {
-            flex: 1;
-            h3 {
-                text-align: left;
-                font-size: 32px;
-                color: #333333;
-                line-height: 32px;
-            }
-        }
-        &-bottom {
-            display: flex;
-            align-items: center;
-            margin-top: 16px;
-        }
-        &-bottom label {
-            margin-right: 30px;
-        }
+.me-invitation-item {
+  margin: 0 30px;
+  font-size: 24px;
+  color: #333333;
+  padding: 30px 0 28px;
+  &-head {
+    margin-right: 16px;
+  }
+  &-aside {
+    flex: 1;
+    h3 {
+      text-align: left;
+      font-size: 32px;
+      color: #333333;
+      line-height: 32px;
     }
+  }
+  &-bottom {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+  }
+  &-bottom label {
+    margin-right: 30px;
+  }
+}
 </style>

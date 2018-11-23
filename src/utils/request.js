@@ -1,5 +1,5 @@
 import 'whatwg-fetch'
-import  Toast  from '../plugins/toast'
+import Toast from '../plugins/toast'
 import { isUrl, json2formData } from './util'
 import { getAccessToken, getCookie } from './userAuth'
 import store from '../store'
@@ -9,17 +9,16 @@ import { IS_ONLINE, TEST_TOKEN, api, originUrl } from './config'
 const ErrorHandler = response => {
   console.error(response)
   const errorText = response.message || response.error || response.code
-    routerRedux.push("/login")
+  routerRedux.push('/login')
   return Toast(errorText)
-    // errorText === '系统异常'
-    // ? Dialog.alert({
-    //     title: '网络异常',
-    //     message: '加载错误，返回主页'
-    //   }).then(() => {
-    //     window.location.href = originUrl
-    //   })
-    // :
-
+  // errorText === '系统异常'
+  // ? Dialog.alert({
+  //     title: '网络异常',
+  //     message: '加载错误，返回主页'
+  //   }).then(() => {
+  //     window.location.href = originUrl
+  //   })
+  // :
 }
 
 const codeMessage = {
@@ -60,7 +59,7 @@ const checkResponseCode = (url, response) => {
     if (parseInt(response.data) === 0) {
       return response.data
     }
-    if(false === response.data) return false
+    if (false === response.data) return false
     return response.data || response
   }
   ErrorHandler(response)
@@ -110,7 +109,7 @@ function request(url, options) {
       const status = e.name
       if (status === 403) {
         Toast.fail('网络异常')
-        routerRedux.push("/login")
+        routerRedux.push('/login')
         return
       }
       if (status <= 504 && status >= 500) {
@@ -120,7 +119,7 @@ function request(url, options) {
       }
       if (status >= 404 && status < 422) {
         Toast.fail('网络异常')
-        routerRedux.push("/login")
+        routerRedux.push('/login')
       }
     })
 }
