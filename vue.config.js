@@ -1,4 +1,4 @@
-const uglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const { NODE_ENV } = process.env
 const isProd = NODE_ENV === 'production'
 module.exports = {
@@ -7,8 +7,8 @@ module.exports = {
   configureWebpack: {
     plugins: isProd
       ? [
-          new uglifyJsPlugin({
-            uglifyOptions: {
+          new TerserPlugin({
+            terserOptions: {
               compress: {
                 join_vars: true,
                 warnings: false,
