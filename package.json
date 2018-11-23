@@ -36,8 +36,22 @@
     "uglifyjs-webpack-plugin": "^2.0.1",
     "vue-template-compiler": "^2.5.17"
   },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
   "prettier": {
     "singleQuote": true,
     "semi": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run precommit-msg && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/**.{js,json,pcss,md,vue}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
