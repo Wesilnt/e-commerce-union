@@ -1,24 +1,31 @@
 <template>
-    <div class="me-invitation">
-        <ul>
-            <li class="ea-flex me-invitation-item" v-for="item of invitationList" :key="item.id">
-                <Avatar :src="item.avatar" :width="88" class="me-invitation-item-head"></Avatar>
-                <aside class="me-invitation-item-aside">
-                    <h3>{{item.name}}</h3>
-                    <div class="me-invitation-item-bottom">
-                        <label>推广进度</label>
-                        <span>0</span>
-                        <Progress :max="item.max" :value="item.value"></Progress>
-                        <span>{{item.max}}</span>
-                    </div>
-                </aside>
-            </li>
-            <div class="load-more" @click="onLoadMore">
-                <p v-show="loading">加载中</p>
-                <p v-show="!loading">{{finished?'无更多邀请函':'查看更多'}}</p>
-            </div>
-        </ul>
-    </div>
+  <div class="me-invitation">
+    <ul>
+      <li
+        class="ea-flex me-invitation-item"
+        v-for="item of invitationList"
+        :key="item.id"
+      >
+        <Avatar
+          :src="item.avatar"
+          :width="88"
+          class="me-invitation-item-head"
+        ></Avatar>
+        <aside class="me-invitation-item-aside">
+          <h3>{{ item.name }}</h3>
+          <div class="me-invitation-item-bottom">
+            <label>推广进度</label> <span>0</span>
+            <progress :max="item.max" :value="item.value"></progress>
+            <span>{{ item.max }}</span>
+          </div>
+        </aside>
+      </li>
+      <div class="load-more" @click="onLoadMore">
+        <p v-show="loading">加载中</p>
+        <p v-show="!loading">{{ finished ? '无更多邀请函' : '查看更多' }}</p>
+      </div>
+    </ul>
+  </div>
 </template>
 
 <script>

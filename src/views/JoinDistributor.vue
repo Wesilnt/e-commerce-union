@@ -1,14 +1,14 @@
 <template>
-    <div class="join-distributor">
-       <section class="join-distributor-section">
-           <Avatar :src="presidenter.avatarUrl"></Avatar>
-           <aside class="join-distributor-content">
-               <p class="join-distributor-name">{{presidenter.contactName}}</p>
-               <p>邀请您成为秦汉胡同分销员</p>
-           </aside>
-       </section>
-        <p class="confirm-submit" @click="onJoin">立即加盟</p>
-    </div>
+  <div class="join-distributor">
+    <section class="join-distributor-section">
+      <Avatar :src="presidenter.avatarUrl"></Avatar>
+      <aside class="join-distributor-content">
+        <p class="join-distributor-name">{{ presidenter.contactName }}</p>
+        <p>邀请您成为秦汉胡同分销员</p>
+      </aside>
+    </section>
+    <p class="confirm-submit" @click="onJoin">立即加盟</p>
+  </div>
 </template>
 
 <script>
@@ -30,6 +30,7 @@ export default {
     this.presidenter = JSON.parse(
       decode(decodeURIComponent(this.presidentInfo))
     )
+    console.log(this.presidenter)
     this.checkDistributor(false).then(res => {
       if (res)
         window.location.href =
@@ -39,9 +40,9 @@ export default {
   methods: {
     ...mapActions(['checkDistributor', 'applyDistributor']),
     onJoin() {
-      this.applyDistributor({ preUserId: this.presidenter.id }).then(() =>
-        this.$router.replace({ name: 'distributionApplyResult' })
-      )
+      this.applyDistributor({ preUserId: this.presidenter.id }).then(res => {
+        if (res) this.$router.replace({ name: 'distributionApplyResult' })
+      })
     }
   }
 }

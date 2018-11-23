@@ -1,22 +1,28 @@
 <template>
-    <div class="apply-success">
-        <!--头部-->
-        <header class="apply-success-header" :style="{backgroundImage:`url(${isDistributor?successIcon:failureIcon})`}">
-        </header>
+  <div class="apply-success">
+    <!-- 头部 -->
+    <header
+      class="apply-success-header"
+      :style="{
+        backgroundImage: `url(${isDistributor ? successIcon : failureIcon})`
+      }"
+    ></header>
 
-        <!--布局-->
-        <article class="apply-success-introduce">
-            <p v-if="isDistributor">您已成功申请成为分销员</p>
-            <p v-else>您目前的推广金额为<em>{{ extendAmount.toFixed(2)}}</em>元，还差<em>{{(200-extendAmount<0?0:200-extendAmount).toFixed(2)}}</em>元就可以成为分销员啦！
-            </p>
-        </article>
+    <!-- 布局 -->
+    <article class="apply-success-introduce">
+      <p v-if="isDistributor">您已成功申请成为分销员</p>
+      <p v-else>
+        您目前的推广金额为<em>{{ extendAmount.toFixed(2) }}</em
+        >元，还差<em>{{ limitAmount }}</em
+        >元就可以成为分销员啦！
+      </p>
+    </article>
 
-        <!--底部描述-->
-        <footer class="apply-success-footer" @click="nextOperate">
-            <p>{{isDistributor?'查看详情':'去分享'}}</p>
-        </footer>
-
-    </div>
+    <!-- 底部描述 -->
+    <footer class="apply-success-footer" @click="nextOperate">
+      <p>{{ isDistributor ? '查看详情' : '去分享' }}</p>
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -29,7 +35,15 @@ export default {
       failureIcon: require('../assets/distributor_failure.png')
     }
   },
-  computed: { ...mapState(['extendAmount', 'isDistributor']) },
+  computed: {
+    ...mapState(['extendAmount', 'isDistributor']),
+    limitAmount: function() {
+      return (200 - this.extendAmount < 0
+        ? 0
+        : 200 - this.extendAmount
+      ).toFixed(2)
+    }
+  },
   created() {},
   methods: {
     ...mapActions(['checkDistributor']),

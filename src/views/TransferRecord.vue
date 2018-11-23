@@ -1,31 +1,32 @@
 <template>
-    <div class="transfer-detail">
-        <!--布局-->
-        <main class="transfer-content">
-            <ul class="transfer-content-list">
-                <li v-for="item of transferList" :key="item.id">
-                    <h4 v-if="item.showYear" class="transfer-content-title">
-                        <hr class="title-line">
-                        2018
-                        <hr class="title-line">
-                    </h4>
-                    <section class="transfer-content-item">
-                        <aside>{{item.createTime | formatDuring}}</aside>
-                        <aside class="item-text">
-                            {{item.isAdd?'+':'-'}} <span>{{item.amount.toFixed(2)}}</span>元
-                        </aside>
-                    </section>
-                </li>
-            </ul>
-        </main>
+  <div class="transfer-detail">
+    <!-- 布局 -->
+    <main class="transfer-content">
+      <ul class="transfer-content-list">
+        <li v-for="item of transferList" :key="item.id">
+          <h4 v-if="item.showYear" class="transfer-content-title">
+            <hr class="title-line" />
+            2018
+            <hr class="title-line" />
+          </h4>
+          <section class="transfer-content-item">
+            <aside>{{ item.createTime | formatDuring }}</aside>
+            <aside class="item-text">
+              {{ item.isAdd ? '+' : '-' }}
+              <span>{{ item.amount.toFixed(2) }}</span
+              >元
+            </aside>
+          </section>
+        </li>
+      </ul>
+    </main>
 
-        <!--底部描述-->
-        <footer class="transfer-detail-footer" @click="onLoadMore">
-            <p v-show="loading">加载中</p>
-            <p v-show="!loading">{{finished?'无更多转账明细':'查看更多'}}</p>
-        </footer>
-
-    </div>
+    <!-- 底部描述 -->
+    <footer class="transfer-detail-footer" @click="onLoadMore">
+      <p v-show="loading">加载中</p>
+      <p v-show="!loading">{{ finished ? '无更多转账明细' : '查看更多' }}</p>
+    </footer>
+  </div>
 </template>
 
 <script>

@@ -1,25 +1,33 @@
 <template>
-    <div class="distributors-container">
-        <ul class="distributors-list">
-            <li class="ea-flex  distributor-item" v-for="item of distributors" :key="item.id">
-                <aside class="ea-flex item-left">
-                    <Avatar></Avatar>
-                    <div class="item-left-content">
-                        <h4 class="name">{{item.distributorNickName}} </h4>
-                        <p class="item-text bottom"> 关系绑定时间:{{item.createTime | formatDuring}} </p>
-                    </div>
-                </aside>
-                <aside class="item-right">
-                    <p class="item-text">推广金额</p>
-                    <p class="item-text bottom"><span>{{item.extendAmount.toFixed(2)}}元</span></p>
-                </aside>
-            </li>
-            <div class="load-more" @click="onLoadMore">
-                <p v-show="isLoading">加载中</p>
-                <p v-show="!isLoading">{{finished?'无更多分销员':'查看更多'}}</p>
-            </div>
-        </ul>
-    </div>
+  <div class="distributors-container">
+    <ul class="distributors-list">
+      <li
+        class="ea-flex  distributor-item"
+        v-for="item of distributors"
+        :key="item.id"
+      >
+        <aside class="ea-flex item-left">
+          <Avatar></Avatar>
+          <div class="item-left-content">
+            <h4 class="name">{{ item.distributorNickName }}</h4>
+            <p class="item-text bottom">
+              关系绑定时间:{{ item.createTime | formatDuring }}
+            </p>
+          </div>
+        </aside>
+        <aside class="item-right">
+          <p class="item-text">推广金额</p>
+          <p class="item-text bottom">
+            <span>{{ item.extendAmount.toFixed(2) }}元</span>
+          </p>
+        </aside>
+      </li>
+      <div class="load-more" @click="onLoadMore">
+        <p v-show="isLoading">加载中</p>
+        <p v-show="!isLoading">{{ finished ? '无更多分销员' : '查看更多' }}</p>
+      </div>
+    </ul>
+  </div>
 </template>
 
 <script>

@@ -1,15 +1,26 @@
 <template>
-    <transition name="fade">
-        <div class="toast" :class="{'toast-mask':mask}" v-if="!hidden" @click.self="handleBgClick">
-            <div  class="toast-inner" :class="[hasTypeClassName,positionClassName]" :style="{backgroundColor: bgColor}">
-                <i class="toast-inner-icon"
-                   :class="spinningClassName"
-                   :style="iconStyle"
-                   v-show="!!iconStyle"></i>
-                <p>{{message}}</p>
-            </div>
-        </div>
-    </transition>
+  <transition name="fade">
+    <div
+      class="toast"
+      :class="{ 'toast-mask': mask }"
+      v-if="!hidden"
+      @click.self="handleBgClick"
+    >
+      <div
+        class="toast-inner"
+        :class="[hasTypeClassName, positionClassName]"
+        :style="{ backgroundColor: bgColor }"
+      >
+        <i
+          class="toast-inner-icon"
+          :class="spinningClassName"
+          :style="iconStyle"
+          v-show="!!iconStyle"
+        ></i>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>

@@ -1,57 +1,73 @@
 <template>
-    <div>
-        <div class="index-header">
-            <div class="user-wrapper">
-                <Avatar :src="presidentInfo.avatarUrl" width="96"/>
-                <p class="text-center user-name"><strong>{{presidentInfo.contanctName}}</strong></p>
-            </div>
-            <div class="index-header_footer">
-                提成比例: {{presidentInfo&&presidentInfo.incomePropors}}%
-            </div>
-        </div>
-        <ul class="ea-flex big-border index-invite center-vertline">
-            <li class="flex-item" @click="toMeInvitation">我的邀请（{{presidentInfo.applyCount}}）</li>
-            <li class="flex-item" @click="toInvitationLetter">分销员邀请函</li>
-        </ul>
-        <div class="big-border">
-            <div class="body-nav">我的资产</div>
-            <div class="body-screen" @click="toProfitDetail(0)">
-                <p>当前累计收益</p>
-                <p class="screen-giant"><strong>
-                    <Counter :num="presidentInfo&&presidentInfo.totalIncome"/>
-                </strong><i class="arrow-right"></i></p>
-                <p>每月10日结算<span class="help">?</span></p>
-            </div>
-            <div class="ea-flex center-vertline body-foot">
-                <div class="flex-item" @click="toProfitDetail(1)">已结算（
-                    <Counter :num="presidentInfo&&presidentInfo.settled"/>
-                    ）
-                </div>
-                <div class="flex-item" @click="toProfitDetail(2)">待结算（
-                    <Counter :num="presidentInfo&&presidentInfo.noSettlement"/>
-                    ）
-                </div>
-            </div>
-        </div>
-        <div class="ea-flex big-border body-foot">
-            <div class="flex-item" @click="toMeDistributors">
-                <p class="txt-giant"><strong>{{presidentInfo&&presidentInfo.disCount}}</strong></p>
-                <p>我的分销员</p>
-            </div>
-            <div class="flex-item" @click="toProfitDetail(0)">
-                <p class="txt-giant"><strong>{{presidentInfo&&presidentInfo.orderCount}}</strong></p>
-                <p>推广订单</p>
-            </div>
-            <div class="flex-item" @click="toTransferRecord">
-                <p class="txt-giant"><strong>{{presidentInfo&&presidentInfo.transRecordCount}}</strong></p>
-                <p>打款记录</p>
-            </div>
-        </div>
-        <div class="ea-flex body-nav" @click="makeAToast">
-            <p>常见问题</p>
-            <i class="arrow-right"></i>
-        </div>
+  <div class="home-container">
+    <div class="index-header">
+      <div class="user-wrapper">
+        <Avatar :src="presidentInfo.avatarUrl" width="96" />
+        <p class="text-center user-name">
+          <strong>{{ presidentInfo.contanctName }}</strong>
+        </p>
+      </div>
+      <div class="index-header_footer">
+        提成比例: {{ presidentInfo && presidentInfo.incomePropors }}%
+      </div>
     </div>
+    <ul class="ea-flex big-border index-invite center-vertline">
+      <li class="flex-item" @click="toMeInvitation">
+        我的邀请（{{ presidentInfo.applyCount }}）
+      </li>
+      <li class="flex-item" @click="toInvitationLetter">分销员邀请函</li>
+    </ul>
+    <div class="big-border">
+      <div class="body-nav">我的资产</div>
+      <div class="body-screen" @click="toProfitDetail(0)">
+        <p>当前累计收益</p>
+        <p class="screen-giant">
+          <strong>
+            <Counter
+              :num="presidentInfo && presidentInfo.totalIncome"
+            /> </strong
+          ><i class="arrow-right"></i>
+        </p>
+        <p>每月10日结算<span class="help">?</span></p>
+      </div>
+      <div class="ea-flex center-vertline body-foot">
+        <div class="flex-item" @click="toProfitDetail(1)">
+          已结算（
+          <Counter :num="presidentInfo && presidentInfo.settled" />
+          ）
+        </div>
+        <div class="flex-item" @click="toProfitDetail(2)">
+          待结算（
+          <Counter :num="presidentInfo && presidentInfo.noSettlement" />
+          ）
+        </div>
+      </div>
+    </div>
+    <div class="ea-flex big-border body-foot">
+      <div class="flex-item" @click="toMeDistributors">
+        <p class="txt-giant">
+          <strong>{{ presidentInfo && presidentInfo.disCount }}</strong>
+        </p>
+        <p>我的分销员</p>
+      </div>
+      <div class="flex-item" @click="toProfitDetail(0)">
+        <p class="txt-giant">
+          <strong>{{ presidentInfo && presidentInfo.orderCount }}</strong>
+        </p>
+        <p>推广订单</p>
+      </div>
+      <div class="flex-item" @click="toTransferRecord">
+        <p class="txt-giant">
+          <strong>{{ presidentInfo && presidentInfo.transRecordCount }}</strong>
+        </p>
+        <p>打款记录</p>
+      </div>
+    </div>
+    <div class="ea-flex body-nav" @click="makeAToast">
+      <p>常见问题</p>
+      <i class="arrow-right"></i>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -92,7 +108,7 @@ export default {
     },
     toInvitationLetter() {
       let info = {
-        id: this.presidentInfo.id,
+        id: this.presidentInfo.userId,
         avatarUrl: this.presidentInfo.avatarUrl,
         contactName: this.presidentInfo.contanctName
       }
@@ -111,9 +127,10 @@ export default {
   }
 }
 </script>
-<style lang="less">
-body {
+<style lang="less" scoped>
+.home-container {
   background-color: #f7f7f7;
+  height: 100vh;
 }
 .index-header {
   background-color: #323241;
@@ -140,10 +157,12 @@ body {
 .index-invite {
   padding: 48px 32px;
   font-size: 32px;
+  background-color: #ffffff;
 }
 
 .body-nav {
   padding: 32px;
+  background-color: #ffffff;
 }
 
 .center-vertline {
@@ -169,6 +188,7 @@ body {
   border-right: none;
   font-size: 28px;
   color: #808080;
+  background-color: #ffffff;
 }
 
 .screen-giant {
@@ -191,5 +211,6 @@ body {
 
 .body-foot {
   padding: 40px 0;
+  background-color: #ffffff;
 }
 </style>

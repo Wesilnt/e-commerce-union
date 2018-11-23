@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <ul class="rules-list">
-            <li class="rules-item" v-for="item of list">
-                <h3 class="rules-item-title">{{item.title}}</h3>
-                <summary class="rules-item-content" v-html="item.content"></summary>
-            </li>
-        </ul>
-    </div>
+  <div>
+    <ul class="rules-list">
+      <li class="rules-item" v-for="item of list" :key="item.id">
+        <h3 class="rules-item-title">{{ item.title }}</h3>
+        <summary class="rules-item-content" v-html="item.content"></summary>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>

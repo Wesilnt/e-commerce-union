@@ -1,21 +1,19 @@
 <template>
-    <div class="login-container">
-        <header>
-            <Avatar :src="userInfo&&userInfo.avatarUrl"></Avatar>
-        </header>
-        <main class="login-content">
-
-            <li class="phone-item">
-                <label>+86 |</label>
-                <input placeholder="手机号" v-model="phone"/>
-            </li>
-            <li class="code-item">
-                <input placeholder="验证码" v-model="code"/>
-                <label @click.stop="getCode">{{getCodeTip}}</label>
-            </li>
-            <p class="confirm-submit" @click="onSubmit" :class="{active:active}">登录</p>
-        </main>
-    </div>
+  <div class="login-container">
+    <header><Avatar :src="userInfo && userInfo.avatarUrl"></Avatar></header>
+    <main class="login-content">
+      <li class="phone-item">
+        <label>+86 |</label> <input placeholder="手机号" v-model="phone" />
+      </li>
+      <li class="code-item">
+        <input placeholder="验证码" v-model="code" />
+        <label @click.stop="getCode">{{ getCodeTip }}</label>
+      </li>
+      <p class="confirm-submit" @click="onSubmit" :class="{ active: active }">
+        登录
+      </p>
+    </main>
+  </div>
 </template>
 
 <script>

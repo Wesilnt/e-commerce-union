@@ -35,6 +35,10 @@ export function isDistributor(params) {
 export function applyDistributor(params) {
   return request.post(`/distribution/applyForDistribution`, params)
 }
+//获取分销员等级设置
+export function getDistributorLevel(params) {
+  return request.post(`/distribution/getDistributorLevel`, params)
+}
 //我的邀请列表
 export async function getMeInvitationList(params) {
   return request(`/distribution/myDisApplyList?${stringify(params)}`)

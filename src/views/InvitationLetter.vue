@@ -1,28 +1,29 @@
 <template>
-    <div class="distributor-poster">
-        <main class="distributor-poster-main">
-            <canvas ref="canvasId" :width="canvasW" :height="canvasH" />
-            <div class="top-container">
-                <img ref="saveImage"/>
-                <p>长按发送给好友</p>
-            </div>
-        </main>
-        <vue-qr :logoSrc="imageUrl"
-                :logoScale="20* radio"
-                :style="{display:'none'}"
-                colorDark="#123456"
-                colorLight="#ff0000"
-                :text="shareUrl"
-                error-level="Q"
-                :size="136"
-                :margin="0"
-        />
-    </div>
+  <div class="distributor-poster">
+    <main class="distributor-poster-main">
+      <canvas ref="canvasId" :width="canvasW" :height="canvasH" />
+      <div class="top-container">
+        <img ref="saveImage" />
+        <p>长按发送给好友</p>
+      </div>
+    </main>
+    <vue-qr
+      :logoSrc="imageUrl"
+      :logoScale="20 * radio"
+      :style="{ display: 'none' }"
+      colorDark="#123456"
+      colorLight="#ff0000"
+      :text="shareUrl"
+      error-level="Q"
+      :size="136"
+      :margin="0"
+    />
+  </div>
 </template>
 <script>
 import VueQr from 'vue-qr'
 import { mapActions as rootActions } from 'vuex'
-import { encode, decode } from '../utils/util'
+import { decode } from '../utils/util'
 export default {
   data() {
     let screenW = document.body.offsetWidth
@@ -164,8 +165,6 @@ export default {
       header.src = require('../assets/logo.png')
       header.onload = () => {
         // let radius = this.headImageW * this.radio
-        let x = this.centerX * this.radio
-        let y = this.qrcodeTop * this.radio
         this.ctx.save()
         // this.ctx.beginPath()
         // this.ctx.arc(x + this.headImageW / 2, y + this.headImageW / 2, this.headImageW / 2, 0, Math.PI * 2, false)

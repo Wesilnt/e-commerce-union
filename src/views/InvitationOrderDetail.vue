@@ -1,29 +1,33 @@
 <template>
-    <div class="order-container">
-        <header>
-            <ScrollNavBar v-model="tabIndex" @onTabClick="tabClick"></ScrollNavBar>
-        </header>
-        <main class="order-content">
-            <ul>
-                <li class="ea-flex order-item" v-for="item of orders">
-                    <aside class="item-left">
-                        <p>订单号: {{item.id}}</p>
-                        <p>{{item.title}}</p>
-                        <p>{{item.createTime}}</p>
-                    </aside>
-                    <aside class="item-right">
-                        <p>收益</p>
-                        <p>{{item.income}}</p>
-                        <p :class="{active: !item.settlement}">{{item.settlement?'已结算':'未结算'}}</p>
-                    </aside>
-                </li>
-                <div class="load-more" @click="onLoadMore">
-                    <p v-show="loading">加载中</p>
-                    <p v-show="!loading">{{finished?'无更多收益明细':'查看更多'}}</p>
-                </div>
-            </ul>
-        </main>
-    </div>
+  <div class="order-container">
+    <header>
+      <ScrollNavBar v-model="tabIndex" @onTabClick="tabClick"></ScrollNavBar>
+    </header>
+    <main class="order-content">
+      <ul>
+        <li class="ea-flex order-item" v-for="item of orders" :key="item.id">
+          <aside class="item-left">
+            <p>订单号: {{ item.id }}</p>
+            <p>{{ item.title }}</p>
+            <p>{{ item.createTime }}</p>
+          </aside>
+          <aside class="item-right">
+            <p>收益</p>
+            <p>{{ item.income }}</p>
+            <p :class="{ active: !item.settlement }">
+              {{ item.settlement ? '已结算' : '未结算' }}
+            </p>
+          </aside>
+        </li>
+        <div class="load-more" @click="onLoadMore">
+          <p v-show="loading">加载中</p>
+          <p v-show="!loading">
+            {{ finished ? '无更多收益明细' : '查看更多' }}
+          </p>
+        </div>
+      </ul>
+    </main>
+  </div>
 </template>
 
 <script>

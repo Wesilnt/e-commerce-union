@@ -5,8 +5,8 @@ let NODE_ENV = process.env.NODE_ENV
 // 调试选项，本地调试请改为 False
 exports.IS_ONLINE = false
 // 测试 Token
-exports.TEST_TOKEN = '60487b89-0503-4aa0-88c3-defe70607929'
-// exports.TEST_TOKEN = "d5baa57e-74ee-4dd4-8122-f9c0f360889f"
+// exports.TEST_TOKEN = "60487b89-0503-4aa0-88c3-defe70607929"
+exports.TEST_TOKEN = 'd5baa57e-74ee-4dd4-8122-f9c0f360889f'
 // 公众号 URL
 exports.WECHAT_SUBSCRIPTION_URL =
   'https://mp.weixin.qq.com/mp/profile_ext?action=home' +

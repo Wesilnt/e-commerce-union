@@ -1,7 +1,10 @@
 <template>
-    <div class="progress-bg">
-        <div class="progress-value" :style="{width:`${value*100/max}%`}"></div>
-    </div>
+  <div class="progress-bg">
+    <div
+      class="progress-value"
+      :style="{ width: `${(value * 100) / max}%` }"
+    ></div>
+  </div>
 </template>
 
 <script>

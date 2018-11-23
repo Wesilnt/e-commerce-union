@@ -1,12 +1,18 @@
 <template>
-    <div>
-        <header class="ea-flex scroll-navBar">
-            <li class="scroll-navBar-item" v-for="(item,index) in bars" :key="item.title"
-                @click.stop.prevent.capture="onTabClick(index)">
-                <a class="scroll-navBar-item-btn" :class="{active:value===index}"> {{item.title}} </a>
-            </li>
-        </header>
-    </div>
+  <div>
+    <header class="ea-flex scroll-navBar">
+      <li
+        class="scroll-navBar-item"
+        v-for="(item, index) in bars"
+        :key="item.title"
+        @click.stop.prevent.capture="onTabClick(index)"
+      >
+        <a class="scroll-navBar-item-btn" :class="{ active: value === index }">
+          {{ item.title }}
+        </a>
+      </li>
+    </header>
+  </div>
 </template>
 
 <script>

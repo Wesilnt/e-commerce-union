@@ -1,5 +1,5 @@
 <template>
-    <div>分销简介</div>
+  <div>分销简介</div>
 </template>
 
 <script>
@@ -8,5 +8,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -102,14 +102,13 @@ export default new Vuex.Store({
       if (undefined != state.isDistributor && useCache)
         return state.isDistributor
       const response = await isDistributor()
-      console.log('res', response)
       await commit('save', { isDistributor: response })
       return response
     },
     /**申请成为分销员*/
     async applyDistributor({ state, commit, dispatch }, params) {
       const res = await applyDistributor(params)
-      if (!res) return
+      if (!res) return null
       await commit('bindDistributorInfo', { extendAmount: res.extendAmount })
       await dispatch('checkDistributor', { useCache: false })
       return res
