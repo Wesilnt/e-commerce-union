@@ -49,7 +49,9 @@ export const getCookie = name => {
   let arr
   const reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
   const regMark = new RegExp('"', 'g')
+  console.log(document.cookie)
   if ((arr = document.cookie.match(reg))) return arr[2].replace(regMark, '')
+
   return null
 }
 export const noAccessToken = () =>

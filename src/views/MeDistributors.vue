@@ -7,9 +7,9 @@
         :key="item.id"
       >
         <aside class="ea-flex item-left">
-          <Avatar></Avatar>
+          <Avatar :src="item.avatarUrl"></Avatar>
           <div class="item-left-content">
-            <h4 class="name">{{ item.distributorNickName }}</h4>
+            <h4 class="name">{{ item.nickName }}</h4>
             <p class="item-text bottom">
               关系绑定时间:{{ item.createTime | formatDuring }}
             </p>
@@ -37,24 +37,9 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'MeDistributors',
   data() {
-    return {
-      distributors: [
-        {
-          id: 1,
-          distributorNickName: 'Anson',
-          createTime: '2018-11-20 12:23:32',
-          extendAmount: 100
-        },
-        {
-          id: 2,
-          distributorNickName: 'Anson',
-          createTime: '2018-11-20 12:23:32',
-          extendAmount: 100
-        }
-      ]
-    }
+    return {}
   },
-  computed: { ...mapState(['isLoading', 'finished']) },
+  computed: { ...mapState(['distributors', 'isLoading', 'finished']) },
   filters: {
     formatDuring: date => {
       let mss = new Date(date)

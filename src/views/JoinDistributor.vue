@@ -30,15 +30,15 @@ export default {
     this.presidenter = JSON.parse(
       decode(decodeURIComponent(this.presidentInfo))
     )
-    console.log(this.presidenter)
+    this.getUserInfo()
     this.checkDistributor(false).then(res => {
-      if (res)
-        window.location.href =
-          'http://t.shbaoyuantech.com/#/my/my-distributionCenter'
+      // if (res)
+      // window.location.href =
+      //   'http://t.shbaoyuantech.com/#/my/my-distributionCenter'
     })
   },
   methods: {
-    ...mapActions(['checkDistributor', 'applyDistributor']),
+    ...mapActions(['getUserInfo', 'checkDistributor', 'applyDistributor']),
     onJoin() {
       this.applyDistributor({ preUserId: this.presidenter.id }).then(res => {
         if (res) this.$router.replace({ name: 'distributionApplyResult' })

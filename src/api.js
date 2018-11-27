@@ -3,12 +3,14 @@ import request from './utils/request'
 import { IS_ONLINE, originUrl } from './utils/config'
 //获取Token
 export async function getToken() {
-  const originHref = window.location.href.split('#')[1]
-  const result = await request.post('/auth/wechat/get-wechat-auth-link', {
-    originUrl: originUrl + originHref
-  })
-  if (IS_ONLINE) window.location.href = result.wechatAuthUrl
-  return result
+  // const originHref = window.location.href.split('#')[1]
+  await request
+    .post('/auth/wechat/get-wechat-auth-link', {
+      originUrl
+    })
+    .then(res => {
+      if (IS_ONLINE) window.location.href = res.wechatAuthUrl
+    })
 }
 //获取用户信息
 export async function getUserByToken(params) {

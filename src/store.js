@@ -31,7 +31,7 @@ export default new Vuex.Store({
     currentPage: 1, //分页page
     loading: false, //列表加载中
     finished: false, //列表加载结束
-    isDistributor: null //是不是分销员
+    isDistributor: undefined //是不是分销员
   },
   mutations: {
     saveUserInfo(state, data) {
@@ -55,17 +55,17 @@ export default new Vuex.Store({
     },
     countDownTime(state, time) {
       state.sending = false
-      if (-1 == time) {
+      if (-1 === time) {
         state.remainTime = '发送短信'
         state.getCodeTip = '获取验证码'
-      } else if (0 == time) {
+      } else if (0 === time) {
         state.remainTime = '重新发送'
         state.getCodeTip = '重新获取'
       } else {
         state.remainTime = '剩余' + time + 's'
         state.getCodeTip = `重新获取(${time})`
       }
-      state.clickAble = -1 == time || 0 == time
+      state.clickAble = -1 === time || 0 === time
     },
     bindPresidentInfo(state, data) {
       Object.assign(state, data)
@@ -99,10 +99,10 @@ export default new Vuex.Store({
     },
     /**是否是分销员*/
     async checkDistributor({ state, commit, dispatch }, useCache = false) {
-      if (undefined != state.isDistributor && useCache)
+      if (undefined !== state.isDistributor && useCache)
         return state.isDistributor
       const response = await isDistributor()
-      await commit('save', { isDistributor: response })
+      await commit('save', { isDistributor: false })
       return response
     },
     /**申请成为分销员*/
@@ -116,7 +116,7 @@ export default new Vuex.Store({
     async sendMobileCode({ commit }, params) {
       await commit('startSendCode')
       const res = await sendMobileCode(params)
-      if (0 != res) {
+      if (0 !== res) {
         await commit('endSendCode')
         return
       }

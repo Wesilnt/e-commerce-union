@@ -9,7 +9,7 @@ import { IS_ONLINE, TEST_TOKEN, api, originUrl } from './config'
 const ErrorHandler = response => {
   console.error(response)
   const errorText = response.message || response.error || response.code
-  routerRedux.push('/login')
+  // routerRedux.push('/login')
   return Toast(errorText)
   // errorText === '系统异常'
   // ? Dialog.alert({
@@ -68,11 +68,12 @@ const checkResponseCode = (url, response) => {
  * Requests a URL, returning a promise.
  *
  * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
+ * @param  {object} [options] The options we want to pass to "fetch" http://192.168.1.161:32100
  * @return {object}           An object containing either "data" or "err"
  */
 function request(url, options) {
   const baseURI = isUrl(url) ? '' : api
+  console.log('baseURI', baseURI)
   const accessToken = IS_ONLINE
     ? getCookie('COOKIE_TOKEN_KEY_CNONLINE')
     : TEST_TOKEN
@@ -109,17 +110,17 @@ function request(url, options) {
       const status = e.name
       if (status === 403) {
         Toast.fail('网络异常')
-        routerRedux.push('/login')
+        // routerRedux.push('/login')
         return
       }
       if (status <= 504 && status >= 500) {
         Toast.fail('网络异常')
-        routerRedux.push('/login')
+        // routerRedux.push('/login')
         return
       }
       if (status >= 404 && status < 422) {
         Toast.fail('网络异常')
-        routerRedux.push('/login')
+        // routerRedux.push('/login')
       }
     })
 }

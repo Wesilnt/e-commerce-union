@@ -7,16 +7,20 @@
         :key="item.id"
       >
         <Avatar
-          :src="item.avatar"
+          :src="item.avatarUrl"
           :width="88"
           class="me-invitation-item-head"
         ></Avatar>
         <aside class="me-invitation-item-aside">
-          <h3>{{ item.name }}</h3>
+          <h3>{{ item.nickName }}</h3>
           <div class="me-invitation-item-bottom">
-            <label>推广进度</label> <span>0</span>
-            <progress :max="item.max" :value="item.value"></progress>
-            <span>{{ item.max }}</span>
+            <label>推广进度</label>
+            <span>{{ item.extendAmount.toFixed(2) }}</span>
+            <progress
+              :max="200"
+              :value="item.extendAmount.toFixed(2)"
+            ></progress>
+            <span>{{ '200.00' }}</span>
           </div>
         </aside>
       </li>
@@ -35,35 +39,14 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'MeInvitation',
   data() {
-    return {
-      invitationList: [
-        { id: 1, avatar: '', name: 'Anson', max: 100, value: 0 },
-        { id: 2, avatar: '', name: 'Anson', max: 100, value: 0 },
-        { id: 3, avatar: '', name: 'Anson', max: 100, value: 0 },
-        { id: 4, avatar: '', name: 'Anson', max: 100, value: 0 },
-        { id: 5, avatar: '', name: 'Anson', max: 100, value: 0 },
-        { id: 6, avatar: '', name: 'Anson', max: 100, value: 0 },
-        { id: 7, avatar: '', name: 'Anson', max: 100, value: 0 }
-      ]
-    }
+    return {}
   },
   components: { Avatar, Progress },
   computed: {
-    ...mapState(['loading', 'finished'])
+    ...mapState(['invitationList', 'loading', 'finished'])
   },
   created() {
     this.getMeInvitationList(true)
-    setTimeout(() => {
-      this.invitationList = [
-        { id: 1, avatar: '', name: 'Anson', max: 100, value: 50 },
-        { id: 2, avatar: '', name: 'Anson', max: 100, value: 50 },
-        { id: 3, avatar: '', name: 'Anson', max: 100, value: 50 },
-        { id: 4, avatar: '', name: 'Anson', max: 100, value: 50 },
-        { id: 5, avatar: '', name: 'Anson', max: 100, value: 50 },
-        { id: 6, avatar: '', name: 'Anson', max: 100, value: 50 },
-        { id: 7, avatar: '', name: 'Anson', max: 100, value: 50 }
-      ]
-    }, 600)
   },
   methods: {
     ...mapActions(['getMeInvitationList']),

@@ -44,7 +44,9 @@ export default {
       ).toFixed(2)
     }
   },
-  created() {},
+  created() {
+    this.checkDistributor(false)
+  },
   methods: {
     ...mapActions(['checkDistributor']),
     nextOperate() {
