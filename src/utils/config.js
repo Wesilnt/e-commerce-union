@@ -24,9 +24,9 @@ if (NODE_ENV === 'development') {
 // 前端访问地址
 // http://t.shbaoyuantech.com/#    测试环境
 // http://m.shbaoyuantech.com/#    正式环境
-let originUrl = 'http://t.shbaoyuantech.com/#/my'
+let originUrl = 'http://e.shbaoyuantech.com'
 if (NODE_ENV === 'production') {
-  originUrl = 'http://m.shbaoyuantech.com/#/my'
+  originUrl = 'http://e.shbaoyuantech.com'
 }
 // 微信授权地址
 // 目前测试环境和正式环境地址一样
