@@ -29,11 +29,13 @@
       </div>
       <div class="ea-flex center-vertline body-foot">
         <div class="flex-item" @click="toProfitDetail(1)">
-          已结算（<Counter :num="presidentInfo && presidentInfo.settled" />）
+          已结算（<Counter
+            :num="(presidentInfo && presidentInfo.settled) || 0"
+          />）
         </div>
         <div class="flex-item" @click="toProfitDetail(2)">
           待结算（<Counter
-            :num="presidentInfo && presidentInfo.noSettlement"
+            :num="(presidentInfo && presidentInfo.noSettlement) || 0"
           />）
         </div>
       </div>
