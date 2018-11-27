@@ -1,7 +1,7 @@
 // 编译环境
 let NODE_ENV = process.env.NODE_ENV
 // 调试选项，本地调试请改为 False
-export const IS_ONLINE = true
+export const IS_ONLINE = false
 
 // 测试 Token
 export const TEST_TOKEN = '60487b89-0503-4aa0-88c3-defe70607929'

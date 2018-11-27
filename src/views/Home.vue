@@ -22,24 +22,19 @@
       <div class="body-screen" @click="toProfitDetail(0)">
         <p>当前累计收益</p>
         <p class="screen-giant">
-          <strong>
-            <Counter
-              :num="presidentInfo && presidentInfo.totalIncome"
-            /> </strong
+          <strong><Counter :num="presidentInfo.totalIncome" /> </strong
           ><i class="arrow-right"></i>
         </p>
         <p>每月10日结算<span class="help">?</span></p>
       </div>
       <div class="ea-flex center-vertline body-foot">
         <div class="flex-item" @click="toProfitDetail(1)">
-          已结算（
-          <Counter :num="presidentInfo && presidentInfo.settled" />
-          ）
+          已结算（<Counter :num="presidentInfo && presidentInfo.settled" />）
         </div>
         <div class="flex-item" @click="toProfitDetail(2)">
-          待结算（
-          <Counter :num="presidentInfo && presidentInfo.noSettlement" />
-          ）
+          待结算（<Counter
+            :num="presidentInfo && presidentInfo.noSettlement"
+          />）
         </div>
       </div>
     </div>

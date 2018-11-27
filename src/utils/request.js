@@ -71,7 +71,6 @@ const checkResponseCode = (url, response) => {
  */
 function request(url, options) {
   const baseURI = isUrl(url) ? '' : api
-  console.log('baseURI', baseURI)
   const accessToken = IS_ONLINE
     ? getCookie('COOKIE_TOKEN_KEY_CNONLINE')
     : TEST_TOKEN

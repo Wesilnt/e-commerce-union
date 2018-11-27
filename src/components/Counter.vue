@@ -22,9 +22,7 @@ export default {
   },
   computed: {
     showNum: function() {
-      return this.animation
-        ? this.count.toFixed(2)
-        : this.origin + this.smallNum
+      return this.animation ? this.count.toFixed(2) : this.num
     }
   },
   mounted() {

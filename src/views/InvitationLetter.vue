@@ -1,7 +1,7 @@
 <template>
   <div class="distributor-poster">
     <main class="distributor-poster-main">
-      <canvas ref="canvasId" :width="canvasW" :height="canvasH" />
+      <canvas ref="canvasId" :width="canvasW" :height="canvasH"></canvas>
       <div class="top-container">
         <img ref="saveImage" />
         <p>长按发送给好友</p>
@@ -24,13 +24,14 @@
 import VueQr from 'vue-qr'
 import { mapActions as rootActions } from 'vuex'
 import { decode } from '../utils/util'
+
 export default {
   data() {
     let screenW = document.body.offsetWidth
     let radio = screenW / 375
     let canvasW = 335 * radio
     let canvasH = 491 * radio
-    let centerX = (canvasW / 2) * radio
+    let centerX = canvasW / 2
     return {
       presidentInfo: this.$route.query.presidentInfo,
       shareUrl: `${
@@ -42,8 +43,7 @@ export default {
       canvasW, //canvas宽度
       canvasH, //canvas高度
       centerX, //canvas中心x坐标
-      qrcodeWidth: 136, //二维码大小
-      qrcodeTop: canvasH - 176, //二维码Top
+      qrcodeWidth: 68 * radio, //二维码大小
       ctx: null,
       canvasData: null,
       isLoading: true,
@@ -127,38 +127,59 @@ export default {
       this.ctx.fillStyle = '#ffc7c7'
       this.ctx.fillRect(0, 0, this.canvasW, this.canvasH)
       this.ctx.restore()
-      resolve()
-      // let cover = new Image();
-      // cover.setAttribute('crossOrigin', 'anonymous');
-      //默认专栏海报分享
-      // let sharePoster = this.columnDetail.sharePostUrl;
-      // //拼团分享海报
-      // if ('collage' == this.postType) sharePoster = this.columnDetail.groupBuySharePostUrl;
-      // // 集赞分享海报
-      // if ('praise' == this.postType) sharePoster = this.sharePostUrl;
-      // cover.src = sharePoster;
-      // cover.onload = () => {
-      //     this.ctx.save();
-      //     this.ctx.drawImage(cover, 0, 0, this.canvasW, this.canvasH);
-      //     this.ctx.restore();
-      //     resolve();
-      // }
+      let cover = new Image()
+      cover.setAttribute('crossOrigin', 'anonymous')
+      cover.src = require('../assets/poster_bg.png')
+      cover.onload = () => {
+        this.ctx.drawImage(cover, 0, 0, this.canvasW, this.canvasH)
+        resolve()
+      }
     },
-    //2. 绘制二维码
+    //2. 绘制提示1
+    async drawTip1(resolve) {
+      const presidenter = JSON.parse(
+        decode(decodeURIComponent(this.presidentInfo))
+      )
+      let tip = `${presidenter.contactName} 邀请你成为秦汉胡同分销员`
+      this.ctx.fillStyle = '#262626'
+      this.ctx.font = `${parseInt((24 * this.radio) / 2)}px Georgia`
+      let textW = this.ctx.measureText(tip).width
+      this.ctx.fillText(
+        tip,
+        this.centerX - textW / 2,
+        ((716 + 12) * this.radio) / 2
+      )
+      resolve()
+    },
+    //3. 绘制提示2
+    async drawTip2(resolve) {
+      let tip = '想要收入翻番，扫码加盟秦汉胡同分销员'
+      this.ctx.fillStyle = '#262626'
+      this.ctx.font = `${parseInt((24 * this.radio) / 2)}px Georgia`
+      let textW = this.ctx.measureText(tip).width
+      this.ctx.fillText(
+        tip,
+        this.centerX - textW / 2,
+        ((716 + 24 + 12 + 12) * this.radio) / 2
+      )
+      resolve()
+    },
+    //4. 绘制二维码
     async drawQrcode(resolve) {
-      let top = this.qrcodeTop
+      let top = ((716 + 24 + 12 + 12 + 30) * this.radio) / 2
       let width = this.qrcodeWidth
       let left = this.centerX - width / 2
       let img = this.$el.children[1].children[0]
-      this.ctx.drawImage(img, left, top, width, width)
-      let currentSrc = img.currentSrc
-      if ('' !== currentSrc && img.complete) return resolve() //如果二维码没有加载则走下面的加载回调绘制
+      if (img.currentSrc && img.complete) {
+        this.ctx.drawImage(img, left, top, width, width)
+        return resolve() //如果二维码没有加载则走下面的加载回调绘制
+      }
       img.onload = () => {
         this.ctx.drawImage(img, left, top, width, width)
         resolve()
       }
     },
-    //3. 绘制头像
+    //5. 绘制头像
     async drawHeadImage(resolve) {
       const header = new Image()
       header.setAttribute('crossOrigin', 'anonymous')
@@ -173,27 +194,6 @@ export default {
         // this.ctx.restore()
         resolve()
       }
-    },
-    //4. 绘制提示1
-    async drawTip1(resolve) {
-      const presidenter = JSON.parse(
-        decode(decodeURIComponent(this.presidentInfo))
-      )
-      let tip = `${presidenter.contactName} 邀请你成为秦汉胡同分销员`
-      this.ctx.fillStyle = '#262626'
-      this.ctx.font = '12px Georgia'
-      let textW = this.ctx.measureText(tip).width
-      this.ctx.fillText(tip, this.centerX - textW / 2, this.canvasH - 220)
-      resolve()
-    },
-    //5. 绘制提示2
-    async drawTip2(resolve) {
-      let tip = '想要收入翻番，扫码加盟秦汉胡同分销员'
-      this.ctx.fillStyle = '#262626'
-      this.ctx.font = '12px Georgia'
-      let textW = this.ctx.measureText(tip).width
-      this.ctx.fillText(tip, this.centerX - textW / 2, this.canvasH - 200)
-      resolve()
     },
     //圆角矩形
     roundedRect(ctx, x, y, width, height, radius) {

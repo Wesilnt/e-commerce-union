@@ -18,13 +18,21 @@
         <aside class="item-right">
           <p class="item-text">推广金额</p>
           <p class="item-text bottom">
-            <span>{{ item.extendAmount.toFixed(2) }}元</span>
+            <span>{{ item.totalSales && item.totalSales.toFixed(2) }}元</span>
           </p>
         </aside>
       </li>
       <div class="load-more" @click="onLoadMore">
         <p v-show="isLoading">加载中</p>
-        <p v-show="!isLoading">{{ finished ? '无更多分销员' : '查看更多' }}</p>
+        <p v-show="!isLoading">
+          {{
+            0 !== loadError.code
+              ? loadError.msg
+              : finished
+              ? '无更多分销员'
+              : '查看更多'
+          }}
+        </p>
       </div>
     </ul>
   </div>
@@ -39,7 +47,9 @@ export default {
   data() {
     return {}
   },
-  computed: { ...mapState(['distributors', 'isLoading', 'finished']) },
+  computed: {
+    ...mapState(['distributors', 'loadError', 'isLoading', 'finished'])
+  },
   filters: {
     formatDuring: date => {
       let mss = new Date(date)
@@ -58,7 +68,7 @@ export default {
   methods: {
     ...mapActions(['getMeDistributors']),
     onLoadMore() {
-      if (this.loading || this.finished) return
+      if (this.loading || this.finished || 0 !== this.loadError.code) return
       this.getMeDistributors(false)
     }
   }

@@ -32,6 +32,7 @@ export default new Vuex.Store({
     currentPage: 1, //分页page
     loading: false, //列表加载中
     finished: false, //列表加载结束
+    loadError: { code: 0, msg: '加载失败' }, //加载失败
     isDistributor: undefined //是不是分销员
   },
   mutations: {
@@ -159,15 +160,20 @@ export default new Vuex.Store({
       const currentPage = refresh ? 1 : state.currentPage + 1
       const params = { currentPage, pageSize: state.pageSize }
       const res = await getMeDistributors(params)
+      if (!res)
+        return commit('setMeDistributors', {
+          loadError: { code: -1, msg: '加载出错了' }
+        })
       let data = refresh ? res.result : state.distributors.concat(res.result)
       const finished = data.length >= res.totalCount
       commit('toggleLoading', false)
       commit('setMeDistributors', { distributors: data, currentPage, finished })
     },
-    async getIncomeOrders({ state, commit }, { refresh, status = 1 }) {
+    async getIncomeOrders({ state, commit }, { refresh, status }) {
       commit('toggleLoading', true)
       const currentPage = refresh ? 1 : state.currentPage + 1
-      const params = { status, currentPage, pageSize: state.pageSize }
+      let pageParams = { currentPage, pageSize: state.pageSize }
+      const params = '0' === status ? pageParams : { status, ...pageParams }
       const res = await getIncomeOrders(params)
       let data = refresh ? res.result : state.incomeOrderList.concat(res.result)
       console.log('getIncomeOrders', res)

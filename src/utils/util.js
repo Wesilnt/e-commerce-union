@@ -34,6 +34,11 @@ export const decode = encodedData => {
   return decodeURIComponent(strData)
 }
 
+export function formatData(data) {
+  if (data < 10) return '0' + data
+  return data
+}
+
 export function debounce(func, wait, immediate) {
   // immediate默认为false
   var timeout, args, context, timestamp, result
@@ -70,12 +75,12 @@ export function debounce(func, wait, immediate) {
 
 export function throttle(func, wait, options) {
   /* options的默认值
-     *  表示首次调用返回值方法时，会马上调用func；否则仅会记录当前时刻，当第二次调用的时间间隔超过wait时，才调用func。
-     *  options.leading = true;
-     * 表示当调用方法时，未到达wait指定的时间间隔，则启动计时器延迟调用func函数，若后续在既未达到wait指定的时间间隔和func函数又未被调用的情况下调用返回值方法，则被调用请求将被丢弃。
-     *  options.trailing = true;
-     * 注意：当options.trailing = false时，效果与上面的简单实现效果相同
-     */
+   *  表示首次调用返回值方法时，会马上调用func；否则仅会记录当前时刻，当第二次调用的时间间隔超过wait时，才调用func。
+   *  options.leading = true;
+   * 表示当调用方法时，未到达wait指定的时间间隔，则启动计时器延迟调用func函数，若后续在既未达到wait指定的时间间隔和func函数又未被调用的情况下调用返回值方法，则被调用请求将被丢弃。
+   *  options.trailing = true;
+   * 注意：当options.trailing = false时，效果与上面的简单实现效果相同
+   */
   var context, args, result
   var timeout = null
   var previous = 0
