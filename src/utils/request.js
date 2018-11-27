@@ -6,7 +6,6 @@ import store from '../store'
 import { IS_ONLINE, TEST_TOKEN, api, originUrl } from './config'
 
 const ErrorHandler = response => {
-  console.error(response)
   const errorText = response.message || response.error || response.code
   // routerRedux.push('/login')
   return Toast(errorText)
