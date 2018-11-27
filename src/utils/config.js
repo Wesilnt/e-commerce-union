@@ -13,6 +13,7 @@ export const WECHAT_SUBSCRIPTION_URL =
   '&__biz=MzA4Mzg3NjE2Mg==&scene=126#wechat_redirect'
 // 后端接口api
 let api = 'https://xcx.test.shbaoyuantech.com:30000'
+NODE_ENV = 'development'
 if (NODE_ENV === 'development') {
   api = 'https://xcx.test.shbaoyuantech.com:30000'
 } else if (NODE_ENV === 'production') {

@@ -3,7 +3,6 @@ import Toast from '../plugins/toast'
 import { isUrl, json2formData } from './util'
 import { getAccessToken, getCookie } from './userAuth'
 import store from '../store'
-import routerRedux from '../router'
 import { IS_ONLINE, TEST_TOKEN, api, originUrl } from './config'
 
 const ErrorHandler = response => {
