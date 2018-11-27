@@ -21,7 +21,9 @@ export default {
         width: length,
         height: length,
         backgroundColor: '#fda0a0',
-        background: `url(${this.src}) center/100% no-repeat`
+        background: this.src
+          ? `url(${this.src}) center/100% no-repeat`
+          : 'transparent'
       }
     }
   }
