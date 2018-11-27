@@ -9,6 +9,7 @@ import {
   validateMobileCode,
   getPresidentDetail,
   getMeInvitationList,
+  getMeDistributors,
   getIncomeOrders,
   getTransferRecords
 } from './api'
@@ -157,9 +158,8 @@ export default new Vuex.Store({
       commit('toggleLoading', true)
       const currentPage = refresh ? 1 : state.currentPage + 1
       const params = { currentPage, pageSize: state.pageSize }
-      const res = await getMeInvitationList(params)
+      const res = await getMeDistributors(params)
       let data = refresh ? res.result : state.distributors.concat(res.result)
-      console.log('getMeDistributors', res)
       const finished = data.length >= res.totalCount
       commit('toggleLoading', false)
       commit('setMeDistributors', { distributors: data, currentPage, finished })
@@ -170,7 +170,7 @@ export default new Vuex.Store({
       const params = { status, currentPage, pageSize: state.pageSize }
       const res = await getIncomeOrders(params)
       let data = refresh ? res.result : state.incomeOrderList.concat(res.result)
-      console.log('getMeDistributors', res)
+      console.log('getIncomeOrders', res)
       const finished = data.length >= res.totalCount
       commit('toggleLoading', false)
       commit('setIncomeOrderList', {
