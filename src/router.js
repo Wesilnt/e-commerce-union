@@ -3,6 +3,10 @@ import Router from 'vue-router'
 import Login from './views/Login.vue'
 
 Vue.use(Router)
+// router.beforeEach((to, from, next) => {
+//     console.log(to, from);
+//     next()
+// })
 
 export default new Router({
   routes: [

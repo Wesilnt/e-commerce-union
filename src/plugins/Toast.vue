@@ -3,8 +3,9 @@
     <div
       class="toast"
       :class="{ 'toast-mask': mask }"
-      v-if="!hidden"
       @click.self="handleBgClick"
+      v-if="shown"
+      :style="overlayStyle"
     >
       <div
         class="toast-inner"
@@ -24,86 +25,60 @@
 </template>
 
 <script>
+const types = ['loading', 'success', 'fail']
+let timeout = null
 export default {
   name: 'Toast',
+  props: [
+    'shown',
+    'type',
+    'mask',
+    'message',
+    'duration',
+    'forbidClick',
+    'spin',
+    'icon',
+    'bgColor',
+    'successBgColor',
+    'failBgColor',
+    'loadingBgColor',
+    'successIcon',
+    'failIcon',
+    'loadingIcon',
+    'position',
+    'overlayStyle'
+  ],
   data: () => {
-    const defaultBgColor = 'rgba(37, 37, 37, 0.82)'
-    const successBgColor = 'rgba(2, 142, 7, 0.85)'
-    const failBgColor = 'rgba(255, 20, 3, 0.85)'
-    const loadingBgColor = 'rgba(0, 0, 0, 0.81)'
     return {
-      hidden: true,
-      forbidClick: true,
-      duration: 3000,
-      inter: null,
-      message: '',
-      mask: false,
-      spin: false,
-      type: '',
-      icon: null,
-      hasTypeClassName: null,
-      iconStyle: null,
-      spinningClassName: null,
-      successBgColor,
-      failBgColor,
-      loadingBgColor,
-      successIcon: require(`../../public/success.svg`),
-      failIcon: require(`../../public/fail.svg`),
-      loadingIcon: require(`../../public/loading.svg`),
-      bgColor: defaultBgColor,
-      position: 'middle'
+      iconStyle: null
     }
   },
   computed: {
     positionClassName: function() {
       return `toast-${this.position}`
-    }
-  },
-  methods: {
-    async show(params) {
-      clearInterval(this.inter)
-      const { type, message } = params
-      if (type) {
-        Object.assign(params, {
-          bgColor: this[`${type}BgColor`],
-          message: message ? message : type
-        })
-      }
-      await this.mapParamsToToast(params)
-      await this.handleClassName(type)
-      this.handleToastShow()
     },
-    mapParamsToToast(params) {
-      Object.assign(this, params)
-      if (this.spin) {
-        this.spinningClassName = 'toast-spinning'
-      }
+    spinningClassName: function() {
+      return (this.spin || this.type === 'loading') && 'toast-spinning'
     },
-    handleClassName(type) {
-      const typeLen = type.length
-      if (typeLen) {
-        this.hasTypeClassName = 'toast-widthIcon'
-        this.iconStyle = {
-          backgroundImage: `url(${this[type + 'Icon']})`
-        }
-      }
-      if (type === 'loading') {
-        this.spinningClassName = 'toast-spinning'
-      }
-      if (this.icon && !typeLen) {
-        this.hasTypeClassName = 'toast-widthIcon'
+    hasTypeClassName: function() {
+      if (this.icon) {
         this.iconStyle = {
           backgroundImage: `url(${this.icon})`
         }
+        return 'toast-widthIcon'
       }
-    },
-    handleToastShow() {
-      this.hidden = false
-      if (this.duration === -1) return
-      this.inter = setTimeout(() => this.handleToastHide(), this.duration)
-    },
+      if (types.includes(this.type)) {
+        this.iconStyle = {
+          backgroundImage: `url(${this[this.type + 'Icon']})`
+        }
+        return 'toast-widthIcon'
+      }
+    }
+  },
+  methods: {
     handleToastHide() {
-      this.$toast.clear()
+      if (!this.shown) return
+      this.clear()
     },
     handleBgClick() {
       if (this.forbidClick) return
@@ -163,7 +138,8 @@ export default {
     top: 10%;
   }
   &.toast-bottom {
-    top: 90%;
+    top: auto;
+    bottom: 10%;
   }
 }
 @keyframes spinning {
