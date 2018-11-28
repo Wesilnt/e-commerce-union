@@ -14,7 +14,6 @@ new Vue({
   router,
   store,
   render: h => {
-    // console.log(window.location)
     if (noAccessToken() && IS_ONLINE) {
       return store.dispatch('getAccessToken')
     }

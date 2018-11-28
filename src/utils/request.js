@@ -8,7 +8,7 @@ import { IS_ONLINE, TEST_TOKEN, api, originUrl } from './config'
 const ErrorHandler = response => {
   const errorText = response.message || response.error || response.code
   // routerRedux.push('/login')
-  return Toast(errorText)
+  return Toast.fail(errorText)
   // errorText === '系统异常'
   // ? Dialog.alert({
   //     title: '网络异常',

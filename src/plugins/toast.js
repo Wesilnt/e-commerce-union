@@ -8,10 +8,10 @@ const isObj = param => {
 }
 
 const COLORS = {
-  bgColor: 'rgba(37, 37, 37, 0.82)',
-  successBgColor: 'rgba(2, 142, 7, 0.85)',
-  failBgColor: 'rgba(255, 20, 3, 0.85)',
-  loadingBgColor: 'rgba(0, 0, 0, 0.81)'
+  defaultBgColor: 'rgba(37, 37, 37, 0.82)',
+  successBgColor: 'rgba(255, 163, 47, 0.82)',
+  failBgColor: 'rgba(90, 90, 90, 0.82)',
+  loadingBgColor: 'rgba(119, 119, 119, 0.49)'
 }
 const ICONS = {
   successIcon: require(`../../public/success.svg`),
@@ -22,7 +22,7 @@ const defaultOptions = {
   shown: true,
   type: 'text',
   mask: false,
-  message: '',
+  message: 'toast something',
   duration: 3000,
   forbidClick: true,
   spin: false,
@@ -58,6 +58,7 @@ function Toast(opts = {}) {
     ...parseOpts(opts),
     clear() {
       toast.shown = false
+      clearTimeout(timeout)
       if (!singleton) {
         document.body.removeChild(toast.$el)
         toast.$destroy()
@@ -65,6 +66,7 @@ function Toast(opts = {}) {
     }
   }
   Object.assign(toast, opts)
+  console.log(toast)
   clearTimeout(timeout)
   if (opts.duration > 0) {
     timeout = setTimeout(() => {
@@ -73,11 +75,13 @@ function Toast(opts = {}) {
   }
   return toast
 }
-const createMethod = type => options =>
-  Toast({
+const createMethod = type => options => {
+  return Toast({
     type,
-    ...parseOpts(options || type)
+    ...parseOpts(isObj(options) ? { message: type, ...options } : type)
   })
+}
+
 types.forEach(item => {
   Toast[item] = createMethod(item)
 })

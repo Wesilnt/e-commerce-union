@@ -95,7 +95,8 @@ export default {
       // duration: 5000 //时间
       // })
       // this.$toast( 'this is a toast' )
-      // this.$toast.fail()
+      // this.$toast.loading({ duration: -1, forbidClick: false })
+      // this.$toast.success({ duration: -1, forbidClick: false,mask:true })
       //   setTimeout(()=>{
       //       this.$toast.clear()
       //   },2000)

@@ -26,7 +26,6 @@
 
 <script>
 const types = ['loading', 'success', 'fail']
-let timeout = null
 export default {
   name: 'Toast',
   props: [
@@ -34,45 +33,44 @@ export default {
     'type',
     'mask',
     'message',
-    'duration',
     'forbidClick',
     'spin',
     'icon',
-    'bgColor',
-    'successBgColor',
-    'failBgColor',
-    'loadingBgColor',
-    'successIcon',
-    'failIcon',
-    'loadingIcon',
     'position',
     'overlayStyle'
   ],
   data: () => {
     return {
-      iconStyle: null
+      positionClassName: null,
+      spinningClassName: null,
+      hasTypeClassName: null,
+      iconStyle: null,
+      bgColor: null
     }
   },
-  computed: {
-    positionClassName: function() {
-      return `toast-${this.position}`
-    },
-    spinningClassName: function() {
-      return (this.spin || this.type === 'loading') && 'toast-spinning'
-    },
-    hasTypeClassName: function() {
-      if (this.icon) {
-        this.iconStyle = {
-          backgroundImage: `url(${this.icon})`
+  watch: {
+    message: {
+      handler(val) {
+        this.positionClassName = `toast-${this.position}`
+        this.spinningClassName =
+          (this.spin || this.type === 'loading') && 'toast-spinning'
+        this.bgColor = this.defaultBgColor
+        if (this.icon) {
+          this.iconStyle = {
+            backgroundImage: `url(${this.icon})`
+          }
+          this.bgColor = this.loadingBgColor
+          return (this.hasTypeClassName = 'toast-widthIcon')
         }
-        return 'toast-widthIcon'
-      }
-      if (types.includes(this.type)) {
-        this.iconStyle = {
-          backgroundImage: `url(${this[this.type + 'Icon']})`
+        if (types.includes(this.type)) {
+          this.iconStyle = {
+            backgroundImage: `url(${this[this.type + 'Icon']})`
+          }
+          this.bgColor = this[`${this.type}BgColor`]
+          this.hasTypeClassName = 'toast-widthIcon'
         }
-        return 'toast-widthIcon'
-      }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -112,19 +110,18 @@ export default {
   left: 50%;
   padding: 20px 24px;
   max-width: 560px;
-  border-radius: 16px;
+  border-radius: 10px;
   text-align: center;
   transform: translate(-50%, -50%);
-  font-size: 24px;
+  font-size: 28px;
   &.toast-widthIcon {
-    height: 240px;
-    width: 240px;
-    font-size: 32px;
+    height: 200px;
+    width: 200px;
     .toast-inner-icon {
       display: inline-block;
-      width: 100px;
-      height: 100px;
-      margin: 20px auto 16px;
+      width: 80px;
+      height: 80px;
+      margin: 10px auto 10px;
       background: transparent center/cover no-repeat;
       &.toast-spinning {
         animation: spinning 800ms infinite linear;
@@ -132,7 +129,7 @@ export default {
     }
   }
   &.toast-middle {
-    top: 50%;
+    top: 45%;
   }
   &.toast-top {
     top: 10%;
