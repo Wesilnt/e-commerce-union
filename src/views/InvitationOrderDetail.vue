@@ -17,7 +17,7 @@
           <aside class="item-left">
             <p>订单号: {{ item.id }}</p>
             <p>{{ item.goodsName || '0' }}</p>
-            <p>{{ item.createTime | formatDuring }}</p>
+            <p>{{ item.createTime | formatYMDHMS }}</p>
           </aside>
           <aside class="item-right">
             <p>收益</p>
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import { formatData } from '../utils/util'
 import ScrollNavBar from '@/components/ScrollNavBar.vue'
 import { mapState, mapActions } from 'vuex'
 
@@ -67,18 +66,6 @@ export default {
         '3802': { title: '待结算' },
         '3803': { title: '已结算' }
       }
-    }
-  },
-  filters: {
-    formatDuring: function(date) {
-      let mss = new Date(date)
-      let year = formatData(mss.getFullYear())
-      let month = formatData(mss.getMonth())
-      let day = formatData(mss.getDate())
-      let hour = formatData(mss.getHours())
-      let minute = formatData(mss.getMinutes())
-      let seconds = formatData(mss.getSeconds())
-      return `${year}-${month}-${day} ${hour}:${minute}:${seconds}`
     }
   },
   components: { ScrollNavBar },

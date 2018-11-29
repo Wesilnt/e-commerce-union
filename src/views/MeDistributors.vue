@@ -11,7 +11,7 @@
           <div class="item-left-content">
             <h4 class="name">{{ item.nickName }}</h4>
             <p class="item-text bottom">
-              关系绑定时间:{{ item.createTime | formatDuring }}
+              关系绑定时间:{{ item.createTime | formatYMD }}
             </p>
           </div>
         </aside>
@@ -49,17 +49,6 @@ export default {
   },
   computed: {
     ...mapState(['distributors', 'loadError', 'isLoading', 'finished'])
-  },
-  filters: {
-    formatDuring: date => {
-      let mss = new Date(date)
-      let year = mss.getFullYear()
-      let month = mss.getMonth()
-      let day = mss.getDate()
-      return `${year}-${month < 9 ? '0' + month : month}-${
-        day < 9 ? '0' + day : day
-      }`
-    }
   },
   components: { Avatar },
   created() {

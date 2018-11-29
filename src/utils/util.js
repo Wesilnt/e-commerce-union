@@ -38,6 +38,32 @@ export function formatData(data) {
   if (data < 10) return '0' + data
   return data
 }
+export const formatYMDHMS = date => {
+  let mss = new Date(date)
+  let year = formatData(mss.getFullYear())
+  let month = formatData(mss.getMonth() + 1)
+  let day = formatData(mss.getDate())
+  let hour = formatData(mss.getHours())
+  let minute = formatData(mss.getMinutes())
+  let seconds = formatData(mss.getSeconds())
+  return `${year}-${month}-${day} ${hour}:${minute}:${seconds}`
+}
+export const formatYMD = date => {
+  let mss = new Date(date)
+  let year = mss.getFullYear()
+  let month = mss.getMonth() + 1
+  let day = mss.getDate()
+  return `${year}-${month < 9 ? '0' + month : month}-${
+    day < 9 ? '0' + day : day
+  }`
+}
+
+export const formatMD = date => {
+  let mss = new Date(date)
+  let month = mss.getMonth() + 1
+  let day = mss.getDate()
+  return `${month < 9 ? '0' + month : month}月${day < 9 ? '0' + day : day}日`
+}
 
 export function debounce(func, wait, immediate) {
   // immediate默认为false
