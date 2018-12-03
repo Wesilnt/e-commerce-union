@@ -28,12 +28,12 @@
         <p>每月10日结算<span class="help">?</span></p>
       </div>
       <div class="ea-flex center-vertline body-foot">
-        <div class="flex-item" @click="toProfitDetail(1)">
+        <div class="flex-item" @click="toProfitDetail(2)">
           已结算（<Counter
             :num="(presidentInfo && presidentInfo.settled) || 0"
           />）
         </div>
-        <div class="flex-item" @click="toProfitDetail(2)">
+        <div class="flex-item" @click="toProfitDetail(1)">
           待结算（<Counter
             :num="(presidentInfo && presidentInfo.noSettlement) || 0"
           />）
